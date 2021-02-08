@@ -58,4 +58,15 @@ describe('LoadProfileScaler', () => {
       })
     });
   });
+
+  describe('toMonthlyKwh', () => {
+    it('returns a LoadProfile scaled to the monthly load', () => {
+      const monthlyLoad = times(12, (i) => ((i + 1) * 100));
+      const scaledLoadProfile = loadProfileScaler.toMonthlyKwh(monthlyLoad);
+
+      scaledLoadProfile.sumByMonth().forEach((monthlyTotal, idx) => {
+        expect(monthlyTotal).toBeCloseTo(monthlyLoad[idx]);
+      })
+    });
+  });
 });
