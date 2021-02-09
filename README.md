@@ -159,7 +159,7 @@ const rateComponents = firstRateElement.rateComponents() // array of RateCompone
 **Rate Component**
 
 ```js
-const firstRateComponent = rateComponents[0]; 
+const firstRateComponent = rateComponents[0];
 firstRateComponent.costs() // array of costs per billing determinant (number)
 firstRateComponent.typicalMonthlyCost() // mean of costs (number)
 firstRateComponent.costForMonth(0) // cost for the 0th [january] month (number)
@@ -170,7 +170,7 @@ firstRateComponent.annualCosts() // sum of costs (number)
 ```
 
 #### RateCalculator Errors
-The RateCalculator will also automatically check your rates for duplicate or missing charges. By default, this feature is enabled and sends errors to the console. 
+The RateCalculator will also automatically check your rates for duplicate or missing charges. By default, this feature is enabled and sends errors to the console.
 
 To disable any part of validation, use the following syntax somewhere early in your application.
 
@@ -270,6 +270,7 @@ loadProfile.scale() // returns a LoadProfileScaler instance (documented below)
 loadProfileScaler.to(scale) // returns a scaled load profile scaled to the provided number
 loadProfileScaler.toTotalKwh(totalKwh) // returns a scaled load profile scaled based on load to the provided kwh
 loadProfileScaler.toAverageMonthlyBill(amount, rate) // returns a scaled load profile scaled to the amount based on the provided RateInterface, rate
+loadProfileScaler.toMonthlyKwh(monthlyKwh) // returns a scaled load profile where the .sumByMonth() method returns an array equivalent to the given `monthlykWh` array
 ```
 
 ### Type Definitions
