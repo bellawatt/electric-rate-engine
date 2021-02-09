@@ -21,7 +21,11 @@ abstract class Validator {
   }
 
   allErrors(): Array<Error> {
-    return this._errors.map(({errors}) => errors).flat();
+    // Ternary required because either TS or jest isn't able to flat map
+    // on the empty array for some reason ¯\_(ツ)_/¯
+    return this._errors.length > 0 ?
+      this._errors.map(({ errors }) => errors).flat() :
+      [];
   }
 
   hasErrors(): Boolean {
