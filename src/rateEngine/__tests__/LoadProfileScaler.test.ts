@@ -68,5 +68,10 @@ describe('LoadProfileScaler', () => {
         expect(monthlyTotal).toBeCloseTo(monthlyLoad[idx]);
       })
     });
+
+    it('throws an error with an array without 12 elements', () => {
+      const monthlyLoad = times(11, (i) => ((i + 1) * 100));
+      expect(() => loadProfileScaler.toMonthlyKwh(monthlyLoad)).toThrowError();
+    });
   });
 });

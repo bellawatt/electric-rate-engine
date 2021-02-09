@@ -49,6 +49,9 @@ class LoadProfileScaler {
   }
 
   toMonthlyKwh(monthlyKwh: Array<number>): LoadProfile {
+    if (monthlyKwh.length !== 12) {
+      throw('monthlyKwh must be an array of 12 numbers');
+    }
     const scalersByMonth = this.loadProfile.sumByMonth().map((kwh, idx) => {
       return monthlyKwh[idx] / kwh;
     });
