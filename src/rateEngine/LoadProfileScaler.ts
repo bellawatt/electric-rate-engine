@@ -53,7 +53,10 @@ class LoadProfileScaler {
       return monthlyKwh[idx] / kwh;
     });
     const scaledLoad = this.loadProfile.expanded().map(loadHour => {
-      return loadHour.load * scalersByMonth[loadHour.month];
+      return {
+        ...loadHour,
+        load: loadHour.load * scalersByMonth[loadHour.month],
+      };
     });
     return new LoadProfile(scaledLoad, {year: this.loadProfile.year});
   }
