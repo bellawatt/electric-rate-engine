@@ -48,6 +48,22 @@ class LoadProfileScaler {
     }
   }
 
+  toMonthlyKwh(monthlyKwh: Array<number>): LoadProfile {
+    if (monthlyKwh.length !== 12) {
+      throw('monthlyKwh must be an array of 12 numbers');
+    }
+    const scalersByMonth = this.loadProfile.sumByMonth().map((kwh, idx) => {
+      return monthlyKwh[idx] / kwh;
+    });
+    const scaledLoad = this.loadProfile.expanded().map(loadHour => {
+      return {
+        ...loadHour,
+        load: loadHour.load * scalersByMonth[loadHour.month],
+      };
+    });
+    return new LoadProfile(scaledLoad, {year: this.loadProfile.year});
+  }
+
   private scaledMonthlyCost(
     scalerAsPercent: number,
     rate: RateInterface,
