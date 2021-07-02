@@ -1,6 +1,9 @@
 import Validator from './_Validator';
 import times from 'lodash/times';
 import { BlockedTiersArgs } from '../billingDeterminants/BlockedTiersInDays';
+import expandedDates from '../utils/expandedDates';
+import LoadProfileFilter from '../LoadProfileFilter';
+import LoadProfile from '../LoadProfile';
 
 interface MinMaxPair {
   min: number;
@@ -10,21 +13,47 @@ interface MinMaxPair {
 class BlockedTiersValidator extends Validator {
   private _args: Array<BlockedTiersArgs>;
   private _localErrors: Array<{english: string, data: {}, type: string}> = [];
+  private _year: number;
 
-  constructor (args: Array<BlockedTiersArgs>) {
+  constructor (args: Array<BlockedTiersArgs>, loadProfile: LoadProfile) {
     super();
 
     this._args = args;
+    this._year = loadProfile.year;
   }
 
   validate() {
     this.validateBasics();
-    this.validateOverlap();
-    this.validateRange();
+    this.validateExpandedDates();
 
     this._localErrors.length > 0 && this.addError('Blocked Tiers Error', this._localErrors);
 
     return this;
+  }
+
+  filters() {
+    return this._args.map(({min, max, ...filters}) => ({min, max, filter: new LoadProfileFilter(filters)}));
+  }
+
+  validateExpandedDates() {
+    const dates = expandedDates(this._year);
+    const filters = this.filters();
+
+    dates.forEach(expandedDate => {
+      const matches = filters.filter(({filter}) => filter.matches(expandedDate));
+
+      if (matches.length === 0) {
+        this._localErrors.push({
+          english: `No tiers are defined for ${JSON.stringify(expandedDate)}`,
+          type: 'missing-tier',
+          data: {expandedDate},
+        })
+        return;
+      }
+
+      this.validateOverlap(matches);
+      this.validateRange(matches);
+    });
   }
 
   protected validateBasics() {
@@ -39,16 +68,16 @@ class BlockedTiersValidator extends Validator {
     });
   }
 
-  protected getSortedPairs(): Array<Array<MinMaxPair>> {
+  protected getSortedPairs(minsAndMaxes: Array<BlockedTiersArgs>): Array<Array<MinMaxPair>> {
     return times(12, i => {
-      return this._args.map(({min, max}) => ({min: min[i], max: max[i]})).sort((a, b) => a.min - b.min);
+      return minsAndMaxes.map(({min, max}) => ({min: min[i], max: max[i]})).sort((a, b) => a.min - b.min);
     });
   }
 
-  protected validateOverlap() {
+  protected validateOverlap(minsAndMaxes: Array<BlockedTiersArgs>) {
     if (this._args.length < 2) return;
 
-    const monthPairs = this.getSortedPairs();
+    const monthPairs = this.getSortedPairs(minsAndMaxes);
 
     monthPairs.forEach((pairs, month) => {
       for (let i = 1; i < pairs.length; i++) {
@@ -63,8 +92,8 @@ class BlockedTiersValidator extends Validator {
     });
   }
 
-  protected validateRange() {
-    const monthPairs = this.getSortedPairs();
+  protected validateRange(minsAndMaxes: Array<BlockedTiersArgs>) {
+    const monthPairs = this.getSortedPairs(minsAndMaxes);
 
     monthPairs.forEach((pairs, month) => {
       if (pairs[0].min > 0) {

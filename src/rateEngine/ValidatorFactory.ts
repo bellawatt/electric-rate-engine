@@ -15,11 +15,11 @@ class ValidatorFactory {
     loadProfile: LoadProfile
   ): Validator {
     switch(type) {
-      case 'EnergyTimeOfUse': 
+      case 'EnergyTimeOfUse':
         return new EnergyTimeOfUseValidator(args as Array<RateComponentInterface & EnergyTimeOfUseArgs>, loadProfile);
       case 'BlockedTiersInDays':
       case 'BlockedTiersInMonths':
-        return new BlockedTiersValidator(args as Array<BlockedTiersArgs>);
+        return new BlockedTiersValidator(args as Array<BlockedTiersArgs>, loadProfile);
       default:
         return new GenericValidator();
     }
