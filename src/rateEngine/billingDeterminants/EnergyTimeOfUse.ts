@@ -1,6 +1,7 @@
-import BillingDeterminants from './_BillingDeterminants';
+import BillingDeterminants, { BillingDeterminantsUnits } from './_BillingDeterminants';
 import LoadProfile from '../LoadProfile';
 import {LoadProfileFilterArgs} from '../LoadProfileFilter';
+import { RateElementClassification } from '../RateElement';
 
 export interface EnergyTimeOfUseArgs {
   months: Array<number>;
@@ -15,8 +16,8 @@ class EnergyTimeOfUse extends BillingDeterminants {
   private _loadProfile: LoadProfile;
 
   rateElementType = 'Time Of Use';
-  rateClassificationType = 'energy';
-  units = 'kWh';
+  rateElementClassification = RateElementClassification.ENERGY;
+  units = BillingDeterminantsUnits.KWH;
 
   constructor(filters: EnergyTimeOfUseArgs, loadProfile: LoadProfile) {
     super();

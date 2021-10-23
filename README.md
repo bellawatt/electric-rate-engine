@@ -32,12 +32,15 @@ const rate = {
     {
       rateElementType: 'FixedPerDay',
       name: 'Delivery Charge',
+      id: 'an-id', // optional, can be used to filter rate elements
+      classification: 'energy', // optional, one of 'energy', 'demand', 'fixed', or 'surcharge'
+      billingCategory: 'supply', // optional, one of 'supply', 'delivery', or 'tax'
       rateComponents: [
         {
           charge: 0.32854,
-          name: "Delivery Charge',
-        }
-      ]
+          name: 'Delivery Charge',
+        },
+      ],
     },
     {
       rateElementType: 'BlockedTiersInDays',
@@ -125,11 +128,71 @@ const exampleBlockedTiersInDaysData = {
     {
       charge: -0.08633,
       min: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // 12 months,
-      max: [12, 12, 12, 12, 14.2, 14.2, 14.2, 14.2, 14.2, 14.2, 12, 12] // 12 months,
+      max: [12, 12, 12, 12, 14.2, 14.2, 14.2, 14.2, 14.2, 14.2, 12, 12], // 12 months,
       name: 'Discount',
     },
   ],
 }
+```
+
+**SurchargeAsPercent**: Used to specify surcharges such as taxes or other percent based charges. For example, some rates have "improvement" charges which are calculated based on a subset of the other rate elements.
+
+The charge for rate components is the decimal equivalent of the percentage. Rate components can specify rate element filter arguments to target specific rate elements. If no filters are specified, the surcharge is applied to all rate elements.
+
+Behind the scenes, the calculator will generate individual rate components for each element that needs to be surcharged.
+
+```js
+const exampleWithSurcharges = [
+  {
+    rateElementType: 'SurchargeAsPercent',
+    name: 'Sales tax',
+    rateComponents: [
+      {
+        name: '7.25% sales tax',
+        charge: 0.0725 // 7.25 cents / dollar
+      },
+    ],
+  },
+  {
+    rateElementType: 'FixedPerMonth',
+    // rest of data
+  },
+  {
+    rateElementType: 'MonthlyEnergy',
+    // rest of data
+  }
+];
+
+const secondSurchargeExample = [
+  {
+    rateElementType: 'SurchargeAsPercent',
+    name: 'A charge that only applies to certain elements',
+    rateComponents: [
+      {
+        name: 'A 10% delivery charge',
+        charge: 0.10,
+        billingCategories: ['delivery'],
+      }
+    ]
+  },
+  {
+    billingCategory: 'delivery',
+    rateElementType: 'FixedPerMonth',
+    // rest of data
+  },
+  {
+    billingCategory: 'delivery',
+    rateElementType: 'MonthlyEnergy',
+    // rest of data
+  },
+  {
+    // This element will not be surcharged because the surcharge is
+    // configured to only apply to delivery billing categories.
+    billingCategory: 'supply',
+    rateElementType: 'MonthlyDemand',
+    // rest of data
+  },
+]
 ```
 
 #### Methods
@@ -149,11 +212,19 @@ rateCalculator.annualCost(); // sum of all RateElement annual costs (number)
 const rateElements = rateCalculator.rateElements() // array of RateElement objects
 ```
 
+These methods accept optional arguments to filter the rate elements. This is useful for situations like displaying supply and delivery charges separately.
+
+```js
+rateCalculator.annualCost({classification: 'energy'}); // shows the cost for energy charges only
+const suppyRateElements = rateCalculator.rateElements({billingCategories: ['supply']})
+```
+
 **Rate Element**
 ```js
 const firstRateElement = rateElements[0];
 firstRateElement.annualCost(); // sum of all RateComponent annual costs (number)
 const rateComponents = firstRateElement.rateComponents() // array of RateComponent objects
+const monthlyCosts = firstRateElement.costs(); // array of costs that sums the costs of all of the rateComponents
 ```
 
 **Rate Component**
@@ -286,7 +357,9 @@ loadProfileScaler.toMonthlyKwh(monthlyKwh) // returns a scaled load profile wher
   exceptForDays: ['2018-03-29'], // array of YYYY-MM-DD date strings of days to exclude from the filtered set regardless of other filters (given example data: March 29th, 2018)
 }
 ```
+
 **Detailed Load Profile Hour**
+
 ```js
 {
   load: number; // 1
@@ -296,6 +369,17 @@ loadProfileScaler.toMonthlyKwh(monthlyKwh) // returns a scaled load profile wher
   date: string;  // 2018-03-29
 }
 ```
+
+**Rate Element Filters**
+
+```ts
+{
+  ids: Array<string>, // ['some-id-we-assigned-to-a-rate-element]
+  billingCategories: Array<string>, // ['supply', 'delivery', 'tax']
+  classifications: Array<string>, // ['fixed', 'demand', 'energy', 'surcharge']
+}
+```
+
 **Month**
 0 indexed starting with January
 

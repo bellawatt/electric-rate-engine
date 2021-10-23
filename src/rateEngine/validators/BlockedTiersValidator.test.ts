@@ -1,5 +1,6 @@
 import BlockedTiersValidator from "./BlockedTiersValidator";
 import LoadProfile from '../LoadProfile';
+import RateCalculator from '../RateCalculator';
 
 describe('BlockedTiersValidator', () => {
   let loadProfile;
@@ -89,7 +90,6 @@ describe('BlockedTiersValidator', () => {
         const HOURS_IN_DAY = 24;
         const MONTHS_IN_YEAR = 12;
 
-        console.log(validator.allErrors());
         expect(validator.allErrors().length).toBe(SUNDAYS_IN_2018 * HOURS_IN_DAY * (MONTHS_IN_YEAR * 2));
       });
     });

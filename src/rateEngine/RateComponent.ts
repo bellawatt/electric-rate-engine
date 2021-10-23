@@ -4,6 +4,7 @@ import sum from 'lodash/sum';
 import BillingDeterminants from './billingDeterminants/_BillingDeterminants';
 import { multiplyDecimals } from './utils/decimals';
 import BillingDeterminantFactoryInterface from './BillingDeterminantFactory';
+import { RateElementFilterArgs } from './RateElement';
 
 interface RateComponentArgs {
   charge: number | Array<number>;
@@ -11,7 +12,8 @@ interface RateComponentArgs {
   billingDeterminants: BillingDeterminants;
 }
 
-export type RateComponentInterface = BillingDeterminantFactoryInterface & {
+export type RateComponentInterface = BillingDeterminantFactoryInterface &
+  RateElementFilterArgs & {
   charge: number | Array<number>;
   name: string;
 };

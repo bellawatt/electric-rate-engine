@@ -7,10 +7,11 @@ import { default as EnergyTimeOfUse, EnergyTimeOfUseArgs } from './billingDeterm
 import LoadProfile from './LoadProfile';
 import MonthlyDemand from './billingDeterminants/MonthlyDemand';
 import MonthlyEnergy from './billingDeterminants/MonthlyEnergy';
+import SurchargeAsPercent, { SurchargeAsPercentArgs } from './billingDeterminants/SurchargeAsPercent';
 
-export type RateElementType = 'EnergyTimeOfUse' | 'BlockedTiersInDays' | 'BlockedTiersInMonths' | 'FixedPerDay' | 'FixedPerMonth' | 'MonthlyEnergy' | 'MonthlyDemand';
+export type RateElementType = 'EnergyTimeOfUse' | 'BlockedTiersInDays' | 'BlockedTiersInMonths' | 'FixedPerDay' | 'FixedPerMonth' | 'MonthlyEnergy' | 'MonthlyDemand' | 'SurchargeAsPercent';
 
-export type BillingDeterminantFactoryInterface = EnergyTimeOfUseArgs | BlockedTiersArgs | {};
+export type BillingDeterminantFactoryInterface = EnergyTimeOfUseArgs | BlockedTiersArgs | SurchargeAsPercentArgs | {};
 
 class BillingDeterminantFactory {
   static make(
@@ -33,6 +34,8 @@ class BillingDeterminantFactory {
         return new MonthlyDemand(loadProfile);
       case 'MonthlyEnergy':
         return new MonthlyEnergy(loadProfile);
+      case 'SurchargeAsPercent':
+        return new SurchargeAsPercent(args as SurchargeAsPercentArgs);
     }
   }
 }

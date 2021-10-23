@@ -1,4 +1,4 @@
-import RateElement, { RateElementInterface } from './RateElement';
+import RateElement, { RateElementInterface, RateElementFilterArgs } from './RateElement';
 import LoadProfile from './LoadProfile';
 
 import sum from 'lodash/sum';
@@ -24,15 +24,21 @@ class RateCalculator {
     this.utilityName = utilityName;
     this.applicability = applicability;
     this.minimumBillAmount = minimumBillAmount;
-    this._rateElements = rateElements.map((element): RateElement => new RateElement(element, loadProfile));
+    this._rateElements = rateElements.map((element, idx): RateElement => {
+      return new RateElement(
+        element,
+        loadProfile,
+        rateElements.filter((_, i) => i !== idx)
+      );
+    });
   }
 
-  rateElements(): Array<RateElement> {
-    return this._rateElements;
+  rateElements({...filters}: RateElementFilterArgs = {}): Array<RateElement> {
+    return this._rateElements.filter((element) => element.matches(filters));
   }
 
-  annualCost(): number {
-    return sum(this.rateElements().map((element) => element.annualCost()));
+  annualCost({...filters}: RateElementFilterArgs = {}): number {
+    return sum(this.rateElements(filters).map((element) => element.annualCost()));
   }
 }
 
