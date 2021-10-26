@@ -10,6 +10,7 @@ import ValidatorFactory from './ValidatorFactory';
 import { RateComponentInterface } from './RateComponent';
 import { Error } from './validators/_Validator';
 import SurchargeAsPercent from './billingDeterminants/SurchargeAsPercent';
+import PriceProfile from './PriceProfile';
 
 export interface RateElementInterface {
   id?: string;
@@ -17,6 +18,7 @@ export interface RateElementInterface {
   rateComponents?: Array<RateComponentInterface>;
   name: string;
   billingCategory?: BillingCategory;
+  priceProfile?: PriceProfile;
 }
 
 export enum RateElementClassification {
@@ -42,10 +44,9 @@ export interface RateElementFilterArgs {
   billingCategories?: Array<BillingCategory>;
 }
 
-
 class RateComponentsFactory {
   static make(
-    {rateElementType, rateComponents, name}: RateElementInterface,
+    {rateElementType, rateComponents, name, priceProfile}: RateElementInterface,
     loadProfile,
     otherRateElements,
   ): Array<RateComponentInterface> {
@@ -63,6 +64,13 @@ class RateComponentsFactory {
               rateElement: new RateElement(element, loadProfile, []),
             }))
         }).flat();
+      case 'HourlyEnergy':
+        return priceProfile.expanded().map(({price, hourOfYear}) => ({
+          name: `${name} - Hour ${hourOfYear}`,
+          charge: price,
+          hourOfYear: hourOfYear,
+          rateElementType: 'HourlyEnergy',
+        }))
       default:
         return rateComponents;
     }
