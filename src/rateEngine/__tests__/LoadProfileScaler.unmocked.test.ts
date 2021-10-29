@@ -80,4 +80,13 @@ describe('LoadProfileScaler', () => {
       });
     });
   });
+
+  describe('optional debugging', () => {
+    it('prints things to the console', () => {
+      console.log = jest.fn();
+      const scaler = new LoadProfileScaler(initialLoadProfile, { debug: true });
+      const avgMonthlyBill = scaler.toAverageMonthlyBill(100, e1);
+      expect(console.log).toHaveBeenCalled();
+    });
+  });
 });

@@ -3,7 +3,7 @@ import maxBy from 'lodash/maxBy';
 import { addDecimals } from './utils/decimals';
 import LoadProfileFilter, { LoadProfileFilterArgs } from './LoadProfileFilter';
 import expandedDates, { ExpandedDate } from './utils/expandedDates';
-import LoadProfileScaler from './LoadProfileScaler';
+import LoadProfileScaler, { LoadProfileScalerOptions } from './LoadProfileScaler';
 
 export interface DetailedLoadProfileHour extends ExpandedDate {
   load: number;
@@ -143,8 +143,8 @@ class LoadProfile {
     return this.sum() / (this.count() * this.max());
   }
 
-  scale(): LoadProfileScaler {
-    return new LoadProfileScaler(this);
+  scale(options: LoadProfileScalerOptions): LoadProfileScaler {
+    return new LoadProfileScaler(this, options);
   }
 
   aggregate(otherLoadProfile: LoadProfile): LoadProfile {

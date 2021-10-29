@@ -5,11 +5,17 @@ import RateInterface from './RateInterface';
 
 // TODO: use proper math for scaling
 // TODO: fix the toAverageMonthlyBill argument... how to properly pass in a rate?
+
+export interface LoadProfileScalerOptions {
+  debug: boolean;
+}
 class LoadProfileScaler {
   loadProfile: LoadProfile;
+  debug: boolean;
 
-  constructor(loadProfile) {
+  constructor(loadProfile, {debug}: LoadProfileScalerOptions = {debug: false}) {
     this.loadProfile = loadProfile;
+    this.debug = debug;
   }
 
   to(scaler: number): LoadProfile {
@@ -77,7 +83,14 @@ class LoadProfileScaler {
       loadProfile: scaledLoadProfile,
     });
 
-    return rateCalculator.annualCost() / 12;
+    const currentMonthlyCost = rateCalculator.annualCost() / 12;
+
+    if (context.debug) {
+      console.log('current scaler is:', scaler);
+      console.log('current monthlyCost is:', currentMonthlyCost);
+    }
+
+    return currentMonthlyCost;
   }
 }
 
