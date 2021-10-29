@@ -37,8 +37,8 @@ class LoadProfileScaler {
   toAverageMonthlyBill(amount: number, rate: RateInterface, goalSeekParams: GoalSeekArgs = {}): LoadProfile {
     const magnitude = Math.max(Math.floor(Math.log10(Math.abs(amount))), 0);
 
-    const orderOfMagnitude = 10 ** magnitude;
-    const initialScalerGuess = orderOfMagnitude;
+    const magnitudeScaler = 10 ** magnitude;
+    const initialScalerGuess = magnitudeScaler;
     const fnParams = [initialScalerGuess, rate, this, magnitude];
 
     try {
@@ -47,13 +47,13 @@ class LoadProfileScaler {
         fnParams,
         percentTolerance: 0.1,
         maxIterations: 1000,
-        maxStep: 0.5 * orderOfMagnitude,
+        maxStep: 0.5 * magnitudeScaler,
         goal: amount,
         independentVariableIdx: 0,
         ...goalSeekParams,
       });
 
-      const scalerAsDecimal = finalScaler / orderOfMagnitude;
+      const scalerAsDecimal = finalScaler / magnitudeScaler;
       return this.to(scalerAsDecimal);
     } catch (e) {
       throw e;
