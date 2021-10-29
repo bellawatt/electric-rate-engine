@@ -135,6 +135,37 @@ const exampleBlockedTiersInDaysData = {
 }
 ```
 
+**DemandTiersInMonths**: A blocked rate structure, based on the max demand for every month. Accepts load profile filters to model seasonal rates.
+
+```js
+const demandTiers = {
+  rateElementType: 'DemandTiersInMonths',
+  name: 'A Tiered Rate by Max Demand',
+  rateComponents: [
+    {
+      charge: 0.025,
+      min: [0,0,0,0,0,0,0,0,0,0,0,0],
+      max: [5,5,5,5,5,5,5,5,5,5,5,5],
+      name: 'First 5 kW',
+    },
+    {
+      charge: 0.05,
+      min: [5,5,5,5,5,5,5,5,5,5,5,5],
+      max: ["Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity"],
+      months: [0,1,2,3,4,9,10,11],
+      name: 'Winter demand charges',
+    },
+    {
+      charge: 0.075,
+      min: [5,5,5,5,5,5,5,5,5,5,5,5],
+      max: ["Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity"],
+      months: [5,6,7,8],
+      name: 'Summer demand charges',
+    },
+  ]
+}
+```
+
 **SurchargeAsPercent**: Used to specify surcharges such as taxes or other percent based charges. For example, some rates have "improvement" charges which are calculated based on a subset of the other rate elements.
 
 The charge for rate components is the decimal equivalent of the percentage. Rate components can specify rate element filter arguments to target specific rate elements. If no filters are specified, the surcharge is applied to all rate elements.
