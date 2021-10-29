@@ -2,17 +2,13 @@ import LoadProfileScaler from '../LoadProfileScaler';
 import times from 'lodash/times';
 import sum from 'lodash/sum';
 import LoadProfile from '../LoadProfile';
-//import goalSeek from 'goal-seek';
+import goalSeek from 'goal-seek';
 import e1 from '../__mocks__/rates/e-1';
 
 const getLoadProfileOfOnes = () => times(8760, () => 1);
 const getLoadProfileOfTwos = () => times(8760, () => 2);
 
-jest.mock('goal-seek', () => {
-  return jest.fn()
-    .mockImplementationOnce(() => 200)
-    .mockImplementationOnce(() => { throw('some goal-seek error'); });
-});
+jest.mock('goal-seek');
 
 describe('LoadProfileScaler', () => {
   const initialLoadProfile = new LoadProfile(getLoadProfileOfOnes(), {year: 2019});
@@ -45,6 +41,8 @@ describe('LoadProfileScaler', () => {
   describe('toAverageMonthlyBill', () => {
     describe('with a mock', () => {
       it('scales by the scaler that goal-seek finds', () => {
+        // @ts-ignore
+        goalSeek.mockImplementationOnce(() => 200)
         const scaledLoadProfile = loadProfileScaler.toAverageMonthlyBill(100, e1);
         expect(scaledLoadProfile).toEqual(
           new LoadProfile(getLoadProfileOfTwos(), {year: 2019})
@@ -52,10 +50,29 @@ describe('LoadProfileScaler', () => {
       });
 
       it('throws the error if goal-seek fails', () => {
+        // @ts-ignore
+        goalSeek.mockImplementationOnce(() => { throw('some goal-seek error'); })
+        
         expect(
           () => loadProfileScaler.toAverageMonthlyBill(100, e1)
         ).toThrow('some goal-seek error');
       })
+
+      it('passes extra parameters to the goal-seek function', () => {
+        // @ts-ignore
+        goalSeek.mockImplementationOnce(() => 200)
+        
+        const goalSeekParams = {
+          maxStep: 55,
+          aUselessParam: true,
+        };
+
+        loadProfileScaler.toAverageMonthlyBill(100, e1, goalSeekParams);
+        // @ts-ignore
+        expect(goalSeek).toHaveBeenCalledWith(
+          expect.objectContaining(goalSeekParams)
+        );
+      });
     });
   });
 

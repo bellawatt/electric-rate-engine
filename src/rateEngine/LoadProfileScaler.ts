@@ -6,6 +6,10 @@ import RateInterface from './RateInterface';
 // TODO: use proper math for scaling
 // TODO: fix the toAverageMonthlyBill argument... how to properly pass in a rate?
 
+interface GoalSeekArgs {
+  [key: string]: any
+};
+
 export interface LoadProfileScalerOptions {
   debug: boolean;
 }
@@ -30,7 +34,7 @@ class LoadProfileScaler {
     return this.to(scaler);
   }
 
-  toAverageMonthlyBill(amount: number, rate: RateInterface): LoadProfile {
+  toAverageMonthlyBill(amount: number, rate: RateInterface, goalSeekParams: GoalSeekArgs = {}): LoadProfile {
     const magnitude = Math.max(Math.floor(Math.log10(Math.abs(amount))), 0);
 
     const orderOfMagnitude = 10 ** magnitude;
@@ -46,6 +50,7 @@ class LoadProfileScaler {
         maxStep: 0.5 * orderOfMagnitude,
         goal: amount,
         independentVariableIdx: 0,
+        ...goalSeekParams,
       });
 
       const scalerAsDecimal = finalScaler / orderOfMagnitude;
