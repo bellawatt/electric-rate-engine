@@ -1,5 +1,4 @@
-import flatMap from 'lodash/flatMap';
-import { ValidatorError as Error, LabeledError } from '../types';
+import { ValidatorError, LabeledError } from '../types';
 
 abstract class Validator {
   protected _errors: Array<LabeledError> = [];
@@ -12,19 +11,15 @@ abstract class Validator {
     });
   }
 
-  allErrors(): Array<Error> {
-    // Ternary required because either TS or jest isn't able to flat map
-    // on the empty array for some reason ¯\_(ツ)_/¯
-    return this._errors.length > 0 ?
-      this._errors.map(({ errors }) => errors).flat() :
-      [];
+  allErrors(): Array<ValidatorError> {
+    return this._errors.map(({ errors }) => errors).flat();
   }
 
   hasErrors(): Boolean {
     return this._errors.length > 0;
   }
 
-  protected addError(label: string, errors: Array<Error>): void {
+  protected addError(label: string, errors: Array<ValidatorError>): void {
     this._errors.push({
       label,
       errors,

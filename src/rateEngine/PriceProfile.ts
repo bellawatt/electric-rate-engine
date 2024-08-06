@@ -6,29 +6,38 @@ import expandedDates from './utils/expandedDates';
 import LoadProfileScaler from './LoadProfileScaler';
 import type {
   DetailedPriceProfileHour,
-  PriceProfileOptions as Options,
+  PriceProfileOptions,
   ExpandedDate,
   LoadProfileFilterArgs,
 } from './types';
+
+const isPriceProfileObject = (p: Array<number> | Array<DetailedPriceProfileHour> | PriceProfile): p is PriceProfile => {
+  return typeof p['expanded'] === 'function';
+};
+
+const isNumberArray = (p: Array<number> | Array<DetailedPriceProfileHour> | PriceProfile): p is Array<number> => {
+  return typeof p[0] === 'number';
+};
 
 class PriceProfile {
   private _priceProfile?: Array<number>;
   private _expanded?: Array<DetailedPriceProfileHour>;
   private _year: number;
 
-  constructor(loadProfile: Array<number>, options: Options);
-  constructor(existingPriceProfile: PriceProfile | Array<number>, options: Options);
-  constructor(expandedPriceProfile: Array<DetailedPriceProfileHour>, options: Options);
+  constructor(loadProfile: Array<number>, options: PriceProfileOptions);
+  constructor(existingPriceProfile: PriceProfile | Array<number>, options: PriceProfileOptions);
+  constructor(expandedPriceProfile: Array<DetailedPriceProfileHour>, options: PriceProfileOptions);
   constructor(
     priceProfileOrExpandedOrExisting: Array<number> | Array<DetailedPriceProfileHour> | PriceProfile,
-    options: Options,
+    options: PriceProfileOptions,
   ) {
-    if (typeof priceProfileOrExpandedOrExisting['expanded'] === 'function') {
-      this._expanded = (priceProfileOrExpandedOrExisting as PriceProfile).expanded();
-    } else if (typeof priceProfileOrExpandedOrExisting[0] === 'number') {
-      this._priceProfile = priceProfileOrExpandedOrExisting as Array<number>;
+
+    if (isPriceProfileObject(priceProfileOrExpandedOrExisting)) {
+      this._expanded = priceProfileOrExpandedOrExisting.expanded();
+    } else if (isNumberArray(priceProfileOrExpandedOrExisting)) {
+      this._priceProfile = priceProfileOrExpandedOrExisting;
     } else {
-      this._expanded = priceProfileOrExpandedOrExisting as Array<DetailedPriceProfileHour>;
+      this._expanded = priceProfileOrExpandedOrExisting;
     }
 
     this._year = options.year;

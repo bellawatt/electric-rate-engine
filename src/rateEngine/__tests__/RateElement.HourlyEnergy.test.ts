@@ -1,7 +1,7 @@
 import PriceProfile from '../PriceProfile';
 import LoadProfile from '../LoadProfile';
 import RateElement from '../RateElement';
-import { RateElementInterface, RateElementType } from '../types';
+import { RateElementInterface } from '../types';
 
 const YEAR = 2019;
 const priceData = Array(8760).fill(0);

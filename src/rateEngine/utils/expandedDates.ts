@@ -4,7 +4,7 @@ import type { ExpandedDate } from '../types';
 
 moment.tz.setDefault('America/New_York');
 
-const dates = {};
+const dates: Record<number, Array<ExpandedDate>> = {};
 
 const generateDates = (year: number): Array<ExpandedDate> => {
   const profileTime = moment(year, 'Y');

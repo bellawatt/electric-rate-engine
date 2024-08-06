@@ -1,4 +1,4 @@
-import type { LoadProfileFilterArgs, RateInterface } from '../../types';
+import type { RateInterface } from '../../types';
 
 const summerPeakCharge = 0.47861;
 const summerPartpeakCharge = 0.36812;

@@ -23,7 +23,7 @@
     "goal-seek": "^0.1.3",
     "lodash": "^4.17.20",
     "moment-timezone": "^0.5.31",
-    "typescript": "^5.5.4"
+    "typescript": "<4.8"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",

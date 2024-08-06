@@ -15,7 +15,7 @@ abstract class BillingDeterminants {
     return this.calculate();
   }
 
-  map(callback: (arg: number, idx: number) => any) {
+  map(callback: (arg: number, idx: number) => number) {
     return this.calculate().map(callback);
   }
 }

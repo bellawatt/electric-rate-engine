@@ -1,6 +1,6 @@
 import LoadProfile from '../LoadProfile';
 import RateCalculator from '../RateCalculator';
-import type { RateElementType, RateInterface } from '../types';
+import type { RateInterface } from '../types';
 import { BillingCategory } from '../constants';
 
 describe('RateCalculator', () => {

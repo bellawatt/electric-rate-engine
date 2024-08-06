@@ -5,6 +5,7 @@ import LoadProfile from '../LoadProfile';
 import BillingDeterminants from './_BillingDeterminants';
 import { RateElementClassification, BillingDeterminantsUnits } from '../constants';
 import { BlockedTiersArgs, LoadProfileFilterArgs } from '../types';
+import convertInfinities from '../utils/convertInfinities';
 
 class DemandTiersInMonths extends BillingDeterminants {
   private _loadProfile: LoadProfile;
@@ -20,8 +21,8 @@ class DemandTiersInMonths extends BillingDeterminants {
     super();
 
     this._loadProfile = loadProfile;
-    this._min = min;
-    this._max = max;
+    this._min = convertInfinities(min);
+    this._max = convertInfinities(max);
     this._filters = filters;
   }
 

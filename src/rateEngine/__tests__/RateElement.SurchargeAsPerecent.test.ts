@@ -1,6 +1,6 @@
 import RateElement from '../RateElement';
 import LoadProfile from '../LoadProfile';
-import type { RateElementType, RateElementInterface } from '../types';
+import type { RateElementInterface } from '../types';
 import { BillingCategory, RateElementClassification } from '../constants';
 
 const getLoadProfileOfOnes = () => Array(8760).fill(1);

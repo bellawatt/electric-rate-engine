@@ -5,6 +5,7 @@ import LoadProfile from '../LoadProfile';
 import BillingDeterminants from './_BillingDeterminants';
 import {  } from '../LoadProfileFilter';
 import { daysPerMonth } from '../utils/assumptions';
+import convertInfinities from '../utils/convertInfinities';
 import { RateElementClassification, BillingDeterminantsUnits } from '../constants';
 import type { BlockedTiersArgs, LoadProfileFilterArgs } from '../types';
 
@@ -22,8 +23,8 @@ class BlockedTiersInDays extends BillingDeterminants {
     super();
 
     this._loadProfile = loadProfile;
-    this._min = min;
-    this._max = max;
+    this._min = convertInfinities(min);
+    this._max = convertInfinities(max);
     this._filters = filters;
   }
 

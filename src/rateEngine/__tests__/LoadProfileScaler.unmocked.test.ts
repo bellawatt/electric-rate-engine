@@ -4,7 +4,7 @@ import sum from 'lodash/sum';
 import LoadProfile from '../LoadProfile';
 import e1 from '../__mocks__/rates/e-1';
 import RateCalculator from '../RateCalculator';
-import type { RateCalculatorInterface, RateInterface } from '../types';
+import type { RateInterface } from '../types';
 
 const getLoadProfileOfOnes = () => times(8760, () => 1);
 

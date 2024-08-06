@@ -4,10 +4,11 @@ import expandedDates from '../utils/expandedDates';
 import LoadProfileFilter from '../LoadProfileFilter';
 import LoadProfile from '../LoadProfile';
 import type { MinMaxPair, BlockedTiersArgs } from '../types';
+import convertInfinities from '../utils/convertInfinities';
 
 class BlockedTiersValidator extends Validator {
   private _args: Array<BlockedTiersArgs>;
-  private _localErrors: Array<{english: string, data: {}, type: string}> = [];
+  private _localErrors: Array<{english: string, data: Record<string, unknown>, type: string}> = [];
   private _year: number;
 
   constructor (args: Array<BlockedTiersArgs>, loadProfile: LoadProfile) {
@@ -27,7 +28,11 @@ class BlockedTiersValidator extends Validator {
   }
 
   filters() {
-    return this._args.map(({min, max, ...filters}) => ({min, max, filter: new LoadProfileFilter(filters)}));
+    return this._args.map(({min, max, ...filters}) => ({
+      min: convertInfinities(min),
+      max: convertInfinities(max),
+      filter: new LoadProfileFilter(filters),
+    }));
   }
 
   validateExpandedDates() {
@@ -63,13 +68,13 @@ class BlockedTiersValidator extends Validator {
     });
   }
 
-  protected getSortedPairs(minsAndMaxes: Array<BlockedTiersArgs>): Array<Array<MinMaxPair>> {
+  protected getSortedPairs(minsAndMaxes: Array<{ min: number[]; max: number[]; }>): Array<Array<MinMaxPair>> {
     return times(12, i => {
       return minsAndMaxes.map(({min, max}) => ({min: min[i], max: max[i]})).sort((a, b) => a.min - b.min);
     });
   }
 
-  protected validateOverlap(minsAndMaxes: Array<BlockedTiersArgs>) {
+  protected validateOverlap(minsAndMaxes: Array<{ min: number[]; max: number[]; }>) {
     if (this._args.length < 2) return;
 
     const monthPairs = this.getSortedPairs(minsAndMaxes);
@@ -87,7 +92,7 @@ class BlockedTiersValidator extends Validator {
     });
   }
 
-  protected validateRange(minsAndMaxes: Array<BlockedTiersArgs>) {
+  protected validateRange(minsAndMaxes: Array<{ min: number[]; max: number[]; }>) {
     const monthPairs = this.getSortedPairs(minsAndMaxes);
 
     monthPairs.forEach((pairs, month) => {

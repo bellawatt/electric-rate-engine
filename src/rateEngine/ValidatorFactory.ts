@@ -3,12 +3,12 @@ import EnergyTimeOfUseValidator from './validators/EnergyTimeOfUseValidator';
 import GenericValidator from './validators/GenericValidator';
 import BlockedTiersValidator from './validators/BlockedTiersValidator';
 import LoadProfile from './LoadProfile';
-import { RateComponentInterface, EnergyTimeOfUseArgs, BlockedTiersArgs, RateElementType, BillingDeterminantFactoryInterface } from './types';
+import { RateComponentInterface, EnergyTimeOfUseArgs, BlockedTiersArgs, RateElementType } from './types';
 
 class ValidatorFactory {
   static make(
     type: RateElementType,
-    args: Array<BillingDeterminantFactoryInterface>,
+    args: RateComponentInterface[],
     loadProfile: LoadProfile
   ): Validator {
     switch(type) {

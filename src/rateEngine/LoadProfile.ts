@@ -6,30 +6,38 @@ import expandedDates from './utils/expandedDates';
 import LoadProfileScaler from './LoadProfileScaler';
 import type {
   DetailedLoadProfileHour,
-  LoadProfileOptions as Options,
+  LoadProfileOptions,
   LoadProfileFilterArgs,
   ExpandedDate,
   LoadProfileScalerOptions,
 } from './types';
+
+const isLoadProfileObject = (p: Array<number> | Array<DetailedLoadProfileHour> | LoadProfile): p is LoadProfile => {
+  return typeof p['expanded'] === 'function';
+};
+
+const isNumberArray = (p: Array<number> | Array<DetailedLoadProfileHour> | LoadProfile): p is Array<number> => {
+  return typeof p[0] === 'number';
+};
 
 class LoadProfile {
   private _loadProfile?: Array<number>;
   private _expanded?: Array<DetailedLoadProfileHour>;
   private _year: number;
 
-  constructor(loadProfile: Array<number>, options: Options);
-  constructor(existingLoadProfile: LoadProfile | Array<number>, options: Options);
-  constructor(expandedLoadProfile: Array<DetailedLoadProfileHour>, options: Options);
+  constructor(loadProfile: Array<number>, options: LoadProfileOptions);
+  constructor(existingLoadProfile: LoadProfile | Array<number>, options: LoadProfileOptions);
+  constructor(expandedLoadProfile: Array<DetailedLoadProfileHour>, options: LoadProfileOptions);
   constructor(
     loadProfileOrExpandedOrExisting: Array<number> | Array<DetailedLoadProfileHour> | LoadProfile,
-    options: Options,
+    options: LoadProfileOptions,
   ) {
-    if (typeof loadProfileOrExpandedOrExisting['expanded'] === 'function') {
-      this._expanded = (loadProfileOrExpandedOrExisting as LoadProfile).expanded();
-    } else if (typeof loadProfileOrExpandedOrExisting[0] === 'number') {
-      this._loadProfile = loadProfileOrExpandedOrExisting as Array<number>;
+    if (isLoadProfileObject(loadProfileOrExpandedOrExisting)) {
+      this._expanded = loadProfileOrExpandedOrExisting.expanded();
+    } else if (isNumberArray(loadProfileOrExpandedOrExisting)) {
+      this._loadProfile = loadProfileOrExpandedOrExisting;
     } else {
-      this._expanded = loadProfileOrExpandedOrExisting as Array<DetailedLoadProfileHour>;
+      this._expanded = loadProfileOrExpandedOrExisting;
     }
 
     this._year = options.year;
@@ -142,7 +150,7 @@ class LoadProfile {
     return this.sum() / (this.count() * this.max());
   }
 
-  scale(options: LoadProfileScalerOptions): LoadProfileScaler {
+  scale(options?: LoadProfileScalerOptions): LoadProfileScaler {
     return new LoadProfileScaler(this, options);
   }
 

@@ -1,4 +1,4 @@
-import type { RateInterface, LoadProfileFilterArgs } from '../../types';
+import type { RateInterface } from '../../types';
 
 const HOLIDAYS = [
   '2018-01-01',
