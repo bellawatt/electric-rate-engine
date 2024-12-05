@@ -323,6 +323,32 @@ const error = firstRateElement.errors[0]
   type: 'argument-length',
 }
 ```
+
+
+```js
+const exampleBlockedTiersInMonthsData = {
+  rateElementType: 'BlockedTiersInMonths', // note the type
+  name: 'Block Tier Rate',
+  rateComponents: [
+    {
+      charge: 0.05,
+      min: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // 12 months, /the minimum kWh monthly limit which apply to this billing element
+      max: [500, 500, 500, 500, 800, 800, 800, 800, 800, 800, 500, 500], // 12 months, much higher limits because the limit is for the entire month
+      name: 'Tier 1',
+    },
+    {
+      charge: 0.16, // much higher on the upper tier
+      min: [500, 500, 500, 500, 800, 800, 800, 800, 800, 800, 500, 500], // The maximum kWh monthly limit which apply to this billing element.
+      max: ["Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity"]
+      name: 'Tier 2',
+    },
+  ],
+}
+```js
+
+
+
+
 **EnergyTimeOfUse Examples**
 ```js
 {
