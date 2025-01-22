@@ -2,6 +2,7 @@ import AnnualDemand from './billingDeterminants/AnnualDemand';
 import BlockedTiersInDays from './billingDeterminants/BlockedTiersInDays';
 import BlockedTiersInMonths from './billingDeterminants/BlockedTiersInMonths';
 import DemandPerDay from './billingDeterminants/DemandPerDay';
+import DemandPerDayAveraged from './billingDeterminants/DemandPerDayAveraged';
 import DemandTiersInMonths from './billingDeterminants/DemandTiersInMonths';
 import DemandTimeOfUse from './billingDeterminants/DemandTimeOfUse';
 import EnergyTimeOfUse from './billingDeterminants/EnergyTimeOfUse';
@@ -49,6 +50,8 @@ class BillingDeterminantsFactory {
         return rateComponents.map(({ charge, name, ...args }) => ({ charge, name, billingDeterminants: new DemandTimeOfUse(args, loadProfile) }));
       case 'DemandPerDay':
         return rateComponents.map(({ charge, name, ...args }) => ({ charge, name, billingDeterminants: new DemandPerDay(args, loadProfile) }));
+      case 'DemandPerDayAveraged':
+        return rateComponents.map(({ charge, name, ...args }) => ({ charge, name, billingDeterminants: new DemandPerDayAveraged(args, loadProfile) }));
       default:
         throw new Error(`Unknown rateElementType: ${rateElementType}`);
     }
