@@ -4,9 +4,6 @@
   "description": "Electric Rate Engine",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
   "license": "MIT",
   "repository": "git://github.com/bellawatt/electric-rate-engine.git",
   "scripts": {
