@@ -16,7 +16,8 @@
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "analyze": "source-map-explorer 'lib/**/*.js' --no-border-checks",
-    "lint": "npx eslint -c eslint.config.js src"
+    "lint": "npx eslint -c eslint.config.js src",
+    "tsc": "tsc -p tsconfig.json"
   },
   "keywords": [],
   "author": "",

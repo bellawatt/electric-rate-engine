@@ -28,5 +28,8 @@ jobs:
             npm ci
           fi
 
+      - name: Typecheck the project
+        run: npm run tsc
+
       - name: Build the project
         run: npm run build
