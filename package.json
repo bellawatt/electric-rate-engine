@@ -10,7 +10,8 @@
   "license": "MIT",
   "repository": "git://github.com/bellawatt/electric-rate-engine.git",
   "scripts": {
-    "test": "jest --config jestconfig.json",
+    "test": "TZ=America/New_York jest --config jestconfig.json",
+    "test:docker": "docker build . -t electric-rate-engine-tests && docker run -it --rm electric-rate-engine-tests",
     "test:watch": "jest --config jestconfig.json --watch",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
