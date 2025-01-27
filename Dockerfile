@@ -9,7 +9,7 @@ WORKDIR /home/bellawatt/electric-rate-engine
 COPY --chown=bellawatt package.json ./
 COPY --chown=bellawatt package-lock.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY ./ ./
 
