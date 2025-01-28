@@ -1,6 +1,6 @@
 import { times } from "lodash";
 import type { RateInterface } from '../../types/index';
-import { RateElementTypeEnum } from "../../constants/index.ts";
+import { RateElementTypeEnum } from "../../constants/index";
 
 const HOLIDAYS = [
   '2018-01-01',
