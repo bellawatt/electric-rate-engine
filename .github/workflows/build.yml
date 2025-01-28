@@ -7,8 +7,9 @@ jobs:
   tsc:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: true
       matrix:
-        version: [12, 14, 16, 18, 20, 22]
+        version: [14, 16, 18, 20, 22]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,7 +21,10 @@ jobs:
           cache: "npm"
 
       - name: Install JS dependencies
-        run: npm ci
+        run: npm install
+
+      - name: Typecheck the project
+        run: npm run tsc
 
       - name: Build the project
         run: npm run build

@@ -1,6 +1,6 @@
 import { times } from "lodash";
 import type { RateInterface } from '../../types/index';
-import { RateElementTypeEnum } from "../../constants/index.ts";
+import { RateElementTypeEnum } from "../../constants/index";
 
 const summerPeakCharge = 0.41333;
 const summmerOffpeakCharge = 0.34989;
