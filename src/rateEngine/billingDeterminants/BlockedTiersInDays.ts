@@ -6,7 +6,7 @@ import BillingDeterminants from './_BillingDeterminants';
 import {  } from '../LoadProfileFilter';
 import { daysPerMonth } from '../utils/assumptions';
 import convertInfinities from '../utils/convertInfinities';
-import { RateElementClassification, BillingDeterminantsUnits } from '../constants';
+import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 import type { BlockedTiersArgs, LoadProfileFilterArgs } from '../types';
 
 class BlockedTiersInDays extends BillingDeterminants {
@@ -15,7 +15,7 @@ class BlockedTiersInDays extends BillingDeterminants {
   private _max: Array<number>;
   private _filters: LoadProfileFilterArgs;
 
-  rateElementType = 'Blocked Tier';
+  rateElementType = RateElementTypeEnum.BlockedTiersInDays;
   rateElementClassification = RateElementClassification.ENERGY;
   units = BillingDeterminantsUnits.KWH;
 

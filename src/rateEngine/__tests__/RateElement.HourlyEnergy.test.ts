@@ -1,7 +1,8 @@
 import PriceProfile from '../PriceProfile';
 import LoadProfile from '../LoadProfile';
 import RateElement from '../RateElement';
-import { RateElementInterface } from '../types';
+import { RateElementInterface } from '../types/index';
+import { RateElementTypeEnum } from '../constants/index';
 
 const YEAR = 2019;
 const priceData = Array(8760).fill(0);
@@ -10,7 +11,7 @@ priceData[ARBITRARY_HOUR_INDEX] = 5;
 
 const rateElementData: RateElementInterface = {
   name: 'An hourly energy rate',
-  rateElementType: 'HourlyEnergy',
+  rateElementType: RateElementTypeEnum.HourlyEnergy,
   priceProfile: priceData,
   rateComponents: []
 };
@@ -35,7 +36,7 @@ describe('RateElement', () => {
     it('works with a PriceProfile for backwards compatibility', () => {
       const data: RateElementInterface = {
         name: 'A rate element with a PriceProfile',
-        rateElementType: 'HourlyEnergy',
+        rateElementType: RateElementTypeEnum.HourlyEnergy,
         priceProfile: new PriceProfile(priceData, {year: YEAR}),
         rateComponents: []
       }

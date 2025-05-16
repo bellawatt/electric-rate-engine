@@ -1,7 +1,7 @@
 import RateElement from '../RateElement';
 import LoadProfile from '../LoadProfile';
-import type { RateElementInterface } from '../types';
-import { BillingCategory, RateElementClassification } from '../constants';
+import type { RateElementInterface } from '../types/index';
+import { BillingCategory, RateElementClassification, RateElementTypeEnum } from '../constants/index';
 
 const getLoadProfileOfOnes = () => Array(8760).fill(1);
 
@@ -11,7 +11,7 @@ const MONTHS_PER_YEAR = 12;
 
 const FIXED_RATE_ELEMENT_DATA: RateElementInterface = {
   id: 'fixed-charge',
-  rateElementType: 'FixedPerMonth',
+  rateElementType: RateElementTypeEnum.FixedPerMonth,
   name: 'A fixed monthly charge',
   rateComponents: [
     {
@@ -23,7 +23,7 @@ const FIXED_RATE_ELEMENT_DATA: RateElementInterface = {
 
 const ENERGY_CHARGE_DATA: RateElementInterface = {
   id: 'energy-charge',
-  rateElementType: 'MonthlyEnergy',
+  rateElementType: RateElementTypeEnum.MonthlyEnergy,
   name: 'An energy charge',
   rateComponents: [
     {
@@ -38,7 +38,7 @@ describe('RateElement', () => {
     it('calculates the surcharge', () => {
       const rateElement = new RateElement(
         {
-          rateElementType: 'SurchargeAsPercent',
+          rateElementType: RateElementTypeEnum.SurchargeAsPercent,
           name: '10% surcharge',
           rateComponents: [
             {
@@ -63,7 +63,7 @@ describe('RateElement', () => {
       it('only surcharges for the specified elements', () => {
         const rateElement = new RateElement(
           {
-            rateElementType: 'SurchargeAsPercent',
+            rateElementType: RateElementTypeEnum.SurchargeAsPercent,
             name: '10% surcharge',
             rateComponents: [
               {
@@ -90,7 +90,7 @@ describe('RateElement', () => {
       it('surcharges all other rate elements', () => {
         const rateElement = new RateElement(
           {
-            rateElementType: 'SurchargeAsPercent',
+            rateElementType: RateElementTypeEnum.SurchargeAsPercent,
             name: '10% surcharge',
             rateComponents: [
               {
@@ -120,7 +120,7 @@ describe('RateElement', () => {
         const rateElement = new RateElement(
           {
             name: 'rate element',
-            rateElementType: 'FixedPerMonth',
+            rateElementType: RateElementTypeEnum.FixedPerMonth,
             rateComponents: [],
           },
           new LoadProfile(getLoadProfileOfOnes(), {year: 2019})
@@ -136,7 +136,7 @@ describe('RateElement', () => {
           {
             id: 'some-id',
             name: 'rate element',
-            rateElementType: 'FixedPerMonth',
+            rateElementType: RateElementTypeEnum.FixedPerMonth,
             rateComponents: [],
           },
           new LoadProfile(getLoadProfileOfOnes(), {year: 2019})
@@ -150,7 +150,7 @@ describe('RateElement', () => {
           {
             id: 'some-id',
             name: 'rate element',
-            rateElementType: 'FixedPerMonth',
+            rateElementType: RateElementTypeEnum.FixedPerMonth,
             rateComponents: [],
           },
           new LoadProfile(getLoadProfileOfOnes(), {year: 2019})
@@ -166,7 +166,7 @@ describe('RateElement', () => {
           {
             billingCategory: BillingCategory.SUPPLY,
             name: 'rate element',
-            rateElementType: 'FixedPerMonth',
+            rateElementType: RateElementTypeEnum.FixedPerMonth,
             rateComponents: [],
           },
           new LoadProfile(getLoadProfileOfOnes(), {year: 2019})
@@ -180,7 +180,7 @@ describe('RateElement', () => {
           {
             billingCategory: BillingCategory.SUPPLY,
             name: 'rate element',
-            rateElementType: 'FixedPerMonth',
+            rateElementType: RateElementTypeEnum.FixedPerMonth,
             rateComponents: [],
           },
           new LoadProfile(getLoadProfileOfOnes(), {year: 2019})
@@ -195,7 +195,7 @@ describe('RateElement', () => {
         const rateElement = new RateElement(
           {
             name: 'rate element',
-            rateElementType: 'FixedPerMonth',
+            rateElementType: RateElementTypeEnum.FixedPerMonth,
             rateComponents: [
               {
                 charge: 1.5,
@@ -213,7 +213,7 @@ describe('RateElement', () => {
         const rateElement = new RateElement(
           {
             name: 'rate element',
-            rateElementType: 'FixedPerMonth',
+            rateElementType: RateElementTypeEnum.FixedPerMonth,
             rateComponents: [
               {
                 charge: 1.5,

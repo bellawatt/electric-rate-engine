@@ -1,5 +1,5 @@
 import times from 'lodash/times';
-import { BillingDeterminantsUnits, RateElementClassification } from '../constants';
+import { BillingDeterminantsUnits, RateElementClassification, RateElementTypeEnum } from '../constants';
 import LoadProfile from '../LoadProfile';
 import { BlockedTiersArgs, LoadProfileFilterArgs } from '../types';
 import convertInfinities from '../utils/convertInfinities';
@@ -11,7 +11,7 @@ class DemandTiersInMonths extends BillingDeterminants {
   private _max: Array<number>;
   private _filters: LoadProfileFilterArgs;
 
-  rateElementType = 'Blocked Demand Tier';
+  rateElementType = RateElementTypeEnum.DemandTiersInMonths;
   rateElementClassification = RateElementClassification.DEMAND;
   units = BillingDeterminantsUnits.KW;
 

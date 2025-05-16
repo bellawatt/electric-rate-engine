@@ -3,14 +3,14 @@ import BillingDeterminants from './_BillingDeterminants';
 import times from 'lodash/times';
 import groupBy from 'lodash/groupBy';
 import sum from 'lodash/sum';
-import { RateElementClassification, BillingDeterminantsUnits } from '../constants';
+import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 import type { DemandPerDayArgs, LoadProfileFilterArgs } from '../types';
 
 class DemandPerDay extends BillingDeterminants {
   private _filters: LoadProfileFilterArgs;
   private _loadProfile: LoadProfile;
 
-  rateElementType = 'Demand Per Day';
+  rateElementType = RateElementTypeEnum.DemandPerDay;
   rateElementClassification = RateElementClassification.DEMAND;
   units = BillingDeterminantsUnits.KW;
 

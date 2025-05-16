@@ -1,5 +1,6 @@
-import { times } from 'lodash';
-import type { RateInterface } from '../../types';
+import { times } from "lodash";
+import type { RateInterface } from '../../types/index';
+import { RateElementTypeEnum } from "../../constants/index";
 
 const summerPeakCharge = 0.41333;
 const summmerOffpeakCharge = 0.34989;
@@ -11,7 +12,7 @@ const etouc: RateInterface = {
   title: 'Residential Time-Of-Use Service (Peak Pricing 4-9pm Every Day)',
   rateElements: [
     {
-      rateElementType: 'FixedPerDay',
+      rateElementType: RateElementTypeEnum.FixedPerDay,
       name: 'Delivery Charge',
       rateComponents: [
         {
@@ -22,7 +23,7 @@ const etouc: RateInterface = {
     },
     {
       name: 'California Clean Climate Credit',
-      rateElementType: 'FixedPerMonth',
+      rateElementType: RateElementTypeEnum.FixedPerMonth,
       rateComponents: [
         {
           charge: [0, 0, 0, -35.73, 0, 0, 0, 0, 0, -35.73, 0, 0],
@@ -32,7 +33,7 @@ const etouc: RateInterface = {
     },
     {
       name: 'Energy Charges',
-      rateElementType: 'EnergyTimeOfUse',
+      rateElementType: RateElementTypeEnum.EnergyTimeOfUse,
       rateComponents: [
         {
           charge: summerPeakCharge,
@@ -65,7 +66,7 @@ const etouc: RateInterface = {
       ],
     },
     {
-      rateElementType: 'BlockedTiersInDays',
+      rateElementType: RateElementTypeEnum.BlockedTiersInDays,
       name: 'First Block Discount',
       rateComponents: [
         {

@@ -1,7 +1,7 @@
 import BillingDeterminants from './_BillingDeterminants';
 import expandedDates from '../utils/expandedDates';
 import LoadProfile from '../LoadProfile';
-import { BillingDeterminantsUnits, RateElementClassification } from '../constants';
+import { BillingDeterminantsUnits, RateElementClassification, RateElementTypeEnum } from '../constants';
 import type { HourlyEnergyArgs, ExpandedDate } from '../types';
 
 class HourlyEnergy extends BillingDeterminants {
@@ -9,7 +9,7 @@ class HourlyEnergy extends BillingDeterminants {
   private _hourOfYear: number;
   private _year: number;
 
-  rateElementType = 'Hourly Energy';
+  rateElementType = RateElementTypeEnum.HourlyEnergy;
   rateElementClassification = RateElementClassification.ENERGY;
   units = BillingDeterminantsUnits.KWH;
 

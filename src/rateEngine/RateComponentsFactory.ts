@@ -1,4 +1,5 @@
 import BillingDeterminantsFactory from './BillingDeterminantsFactory';
+import { RateElementTypeEnum } from './constants';
 import LoadProfile from './LoadProfile';
 import PriceProfile from './PriceProfile';
 import RateComponent from './RateComponent';
@@ -24,7 +25,7 @@ export default class RateComponentsFactory {
     otherRateElements: Array<RateElementInterface>,
   ): ProcessedRateElementInterface {
     switch (rateElement.rateElementType) {
-      case 'SurchargeAsPercent': {
+      case RateElementTypeEnum.SurchargeAsPercent: {
         const rateComponents = rateElement.rateComponents.flatMap(
           ({ name: rateComponentName, charge, ...filterArgs }) => {
             return otherRateElements
@@ -44,7 +45,7 @@ export default class RateComponentsFactory {
           rateComponents,
         };
       }
-      case 'HourlyEnergy': {
+      case RateElementTypeEnum.HourlyEnergy: {
         const priceProfile = new PriceProfile(rateElement.priceProfile, { year: loadProfile.year });
         return {
           ...rateElement,

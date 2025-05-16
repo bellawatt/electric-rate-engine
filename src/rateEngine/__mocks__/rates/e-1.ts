@@ -1,5 +1,6 @@
-import { times } from 'lodash';
-import type { RateInterface } from '../../types';
+import { times } from "lodash";
+import type { RateInterface } from '../../types/index';
+import { RateElementTypeEnum } from "../../constants";
 
 const SUMMMER_MONTHS = [4, 5, 6, 7, 8, 9];
 const cutoff_1 = times(12, (i) => (SUMMMER_MONTHS.includes(i) ? 13 : 12.5));
@@ -11,7 +12,7 @@ const e1: RateInterface = {
   rateElements: [
     {
       name: 'Delivery Charge',
-      rateElementType: 'FixedPerDay',
+      rateElementType: RateElementTypeEnum.FixedPerDay,
       rateComponents: [
         {
           charge: 0.32854,
@@ -21,7 +22,7 @@ const e1: RateInterface = {
     },
     {
       name: 'California Clean Climate Credit',
-      rateElementType: 'FixedPerMonth',
+      rateElementType: RateElementTypeEnum.FixedPerMonth,
       rateComponents: [
         {
           charge: [0, 0, 0, -35.73, 0, 0, 0, 0, 0, -35.73, 0, 0],
@@ -31,7 +32,7 @@ const e1: RateInterface = {
     },
     {
       name: 'Total Energy Rates',
-      rateElementType: 'BlockedTiersInDays',
+      rateElementType: RateElementTypeEnum.BlockedTiersInDays,
       rateComponents: [
         {
           charge: 0.24373,

@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Demand Charge",
+    "rateElementType": "MonthlyDemand",
+    "classification": "demand",
+    "rateComponents": [
+      {
+        "name": "Monthly Demand Charge",
+        "charge": 0
+      }
+    ]
+  },
+  {
+    "name": "Customer Charge",
+    "rateElementType": "FixedPerMonth",
+    "classification": "fixed",
+    "rateComponents": [
+      {
+        "name": "Customer Charge",
+        "charge": 228.13
+      }
+    ]
+  },
+  {
+    "name": "Energy Charge",
+    "rateElementType": "EnergyTimeOfUse",
+    "classification": "energy",
+    "rateComponents": [
+      {
+        "charge": 0.69592,
+        "months": [5, 6, 7, 8],
+        "daysOfWeek": [1, 2, 3, 4, 5],
+        "exceptForDays": [],
+        "hourStarts": [16, 17, 18, 19, 20],
+        "name": "Summer Peak"
+      },
+      {
+        "charge": 0.39786,
+        "months": [5, 6, 7, 8],
+        "daysOfWeek": [6, 0],
+        "exceptForDays": [],
+        "hourStarts": [16, 17, 18, 19, 20],
+        "name": "Summer Mid-Peak"
+      },
+      {
+        "charge": 0.23294,
+        "months": [5, 6, 7, 8],
+        "daysOfWeek": [0, 1, 2, 3, 4, 5, 6],
+        "exceptForDays": [],
+        "hourStarts": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 21, 22, 23],
+        "name": "Summer Off-Peak"
+      },
+      {
+        "charge": 0.44997,
+        "months": [0, 1, 2, 3, 4, 9, 10, 11],
+        "daysOfWeek": [0, 1, 2, 3, 4, 5, 6],
+        "exceptForDays": [],
+        "hourStarts": [16, 17, 18, 19, 20],
+        "name": "Winter Mid-Peak"
+      },
+      {
+        "charge": 0.24897,
+        "months": [0, 1, 2, 3, 4, 9, 10, 11],
+        "daysOfWeek": [0, 1, 2, 3, 4, 5, 6],
+        "exceptForDays": [],
+        "hourStarts": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23],
+        "name": "Winter Off-Peak"
+      },
+      {
+        "charge": 0.12406,
+        "months": [0, 1, 2, 3, 4, 9, 10, 11],
+        "daysOfWeek": [0, 1, 2, 3, 4, 5, 6],
+        "exceptForDays": [],
+        "hourStarts": [8, 9, 10, 11, 12, 13, 14, 15],
+        "name": "Winter Super Off-Peak"
+      }
+    ]
+  }
+]

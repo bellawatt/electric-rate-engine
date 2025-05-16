@@ -21,7 +21,7 @@ The Rate Calculator is composed of three levels of abstraction:
 In addition to the rate, a load profile must be provided in order to calculate the rate.
 
 ```js
-import { RateCalculator } from '@bellawatt/electric-rate-engine';
+import { RateCalculator, RatElementTypeEnum } from '@bellawatt/electric-rate-engine';
 
 const loadProfile = // array of 8760 load profile hours
 
@@ -30,7 +30,7 @@ const rate = {
   title: 'Residential Time-Of-Use Service (Tiered)',
   rateElements: [
     {
-      rateElementType: 'FixedPerDay',
+      rateElementType: RatElementTypeEnum.FixedPerDay,
       name: 'Delivery Charge',
       id: 'an-id', // optional, can be used to filter rate elements
       classification: 'energy', // optional, one of 'energy', 'demand', 'fixed', or 'surcharge'
@@ -43,7 +43,7 @@ const rate = {
       ],
     },
     {
-      rateElementType: 'BlockedTiersInDays',
+      rateElementType: RatElementTypeEnum.BlockedTiersInDays,
       name: 'First Block Discount',
       rateComponents: [
         {
@@ -65,7 +65,7 @@ const rateCalculator = new RateCalculator({...rate, loadProfile});
 **FixedPerDay**: A fixed cost per day.
 ```js
 const exampleFixedPerDayData = {
-  rateElementType: 'FixedPerDay',
+  rateElementType: RatElementTypeEnum.FixedPerDay,
   name: 'Delivery Charge',
   rateComponents: [
     {
@@ -81,7 +81,7 @@ const exampleFixedPerDayData = {
 ```js
 const exampleFixedPerMonthData = {
   name: 'California Clean Climate Credit',
-  rateElementType: 'FixedPerMonth',
+  rateElementType: RatElementTypeEnum.FixedPerMonth,
   rateComponents: [
     {
       charge: [0, 0, 0, -35.73, 0, 0, 0, 0, 0, -35.73, 0, 0],
@@ -96,7 +96,7 @@ const HOLIDAYS = ['2018-01-01','2018-02-19','2018-05-28','2018-07-04','2018-09-0
 
 const exampleEnergyTimeOfUseData = {
   name: 'Energy Charges',
-  rateElementType: 'EnergyTimeOfUse',
+  rateElementType: RatElementTypeEnum.EnergyTimeOfUse,
   rateComponents: [
     {
       charge: 0.43293,
@@ -122,7 +122,7 @@ const exampleEnergyTimeOfUseData = {
 **BlockedTiersInDays**: An inclining or declining block rate structure, where blocks are measured on a per-day basis.
 ```js
 const exampleBlockedTiersInDaysData = {
-  rateElementType: 'BlockedTiersInDays',
+  rateElementType: RatElementTypeEnum.BlockedTiersInDays,
   name: 'First Block Discount',
   rateComponents: [
     {
@@ -139,7 +139,7 @@ const exampleBlockedTiersInDaysData = {
 
 ```js
 const demandTiers = {
-  rateElementType: 'DemandTiersInMonths',
+  rateElementType: RatElementTypeEnum.DemandTiersInMonths,
   name: 'A Tiered Rate by Max Demand',
   rateComponents: [
     {
@@ -175,7 +175,7 @@ Behind the scenes, the calculator will generate individual rate components for e
 ```js
 const exampleWithSurcharges = [
   {
-    rateElementType: 'SurchargeAsPercent',
+    rateElementType: RatElementTypeEnum.SurchargeAsPercent,
     name: 'Sales tax',
     rateComponents: [
       {
@@ -185,18 +185,18 @@ const exampleWithSurcharges = [
     ],
   },
   {
-    rateElementType: 'FixedPerMonth',
+    rateElementType: RatElementTypeEnum.FixedPerMonth,
     // rest of data
   },
   {
-    rateElementType: 'MonthlyEnergy',
+    rateElementType: RatElementTypeEnum.MonthlyEnergy,
     // rest of data
   }
 ];
 
 const secondSurchargeExample = [
   {
-    rateElementType: 'SurchargeAsPercent',
+    rateElementType: RatElementTypeEnum.SurchargeAsPercent,
     name: 'A charge that only applies to certain elements',
     rateComponents: [
       {
@@ -208,19 +208,19 @@ const secondSurchargeExample = [
   },
   {
     billingCategory: 'delivery',
-    rateElementType: 'FixedPerMonth',
+    rateElementType: RatElementTypeEnum.FixedPerMonth,
     // rest of data
   },
   {
     billingCategory: 'delivery',
-    rateElementType: 'MonthlyEnergy',
+    rateElementType: RatElementTypeEnum.MonthlyEnergy,
     // rest of data
   },
   {
     // This element will not be surcharged because the surcharge is
     // configured to only apply to delivery billing categories.
     billingCategory: 'supply',
-    rateElementType: 'MonthlyDemand',
+    rateElementType: RatElementTypeEnum.MonthlyDemand,
     // rest of data
   },
 ]

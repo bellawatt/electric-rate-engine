@@ -1,4 +1,5 @@
-import type { RateInterface } from '../../types';
+import { RateElementTypeEnum } from '../../constants/index';
+import type { RateInterface } from '../../types/index';
 
 const summerPeakCharge = 0.47861;
 const summerPartpeakCharge = 0.36812;
@@ -11,7 +12,7 @@ const ev2a: RateInterface = {
   title: 'Residential Time-Of-Use Service for Plug-In Electric Vehicle Customers',
   rateElements: [
     {
-      rateElementType: 'FixedPerDay',
+      rateElementType: RateElementTypeEnum.FixedPerDay,
       name: 'Delivery Charge',
       rateComponents: [
         {
@@ -22,7 +23,7 @@ const ev2a: RateInterface = {
     },
     {
       name: 'California Clean Climate Credit',
-      rateElementType: 'FixedPerMonth',
+      rateElementType: RateElementTypeEnum.FixedPerMonth,
       rateComponents: [
         {
           charge: [0, 0, 0, -35.73, 0, 0, 0, 0, 0, -35.73, 0, 0],
@@ -32,7 +33,7 @@ const ev2a: RateInterface = {
     },
     {
       name: 'Energy Charges',
-      rateElementType: 'EnergyTimeOfUse',
+      rateElementType: RateElementTypeEnum.EnergyTimeOfUse,
       rateComponents: [
         {
           charge: summerPeakCharge,

@@ -3,7 +3,7 @@ import LoadProfile from '../LoadProfile';
 import PriceProfile from '../PriceProfile';
 import RateElement from '../RateElement';
 import BillingDeterminants from '../billingDeterminants/_BillingDeterminants';
-import { BillingCategory, RateElementClassification } from '../constants';
+import { BillingCategory, RateElementClassification, RateElementTypeEnum } from '../constants';
 
 /**
  * Here's an example rate definition, with the types of the
@@ -56,115 +56,111 @@ interface BaseRateElementInterface {
   id?: string;
   name: string;
   billingCategory?: BillingCategory;
-};
+}
 
 interface BaseRateComponentInterface {
   charge: number | Array<number>;
   name: string;
-};
+}
 
 type BaseRateElementType =
-    | AnnualDemandRateElementInterface
-    | BlockedTiersInDaysRateElementInterface
-    | BlockedTiersInMonthsRateElementInterface
-    | DemandPerDayRateElementInterface
-    | DemandPerDayAveragedRateElementInterface
-    | DemandTiersInMonthsRateElementInterface
-    | DemandTimeOfUseRateElementInterface
-    | EnergyTimeOfUseRateElementInterface
-    | FixedPerDayRateElementInterface
-    | FixedPerMonthRateElementInterface
-    | HourlyEnergyRateElementInterface
-    | MonthlyDemandRateElementInterface
-    | MonthlyEnergyRateElementInterface;
+  | AnnualDemandRateElementInterface
+  | BlockedTiersInDaysRateElementInterface
+  | BlockedTiersInMonthsRateElementInterface
+  | DemandPerDayRateElementInterface
+  | DemandPerDayAveragedRateElementInterface
+  | DemandTiersInMonthsRateElementInterface
+  | DemandTimeOfUseRateElementInterface
+  | EnergyTimeOfUseRateElementInterface
+  | FixedPerDayRateElementInterface
+  | FixedPerMonthRateElementInterface
+  | HourlyEnergyRateElementInterface
+  | MonthlyDemandRateElementInterface
+  | MonthlyEnergyRateElementInterface;
 
-export type RateElementInterface = 
-    | BaseRateElementType
-    | UnprocessedSurchargeAsPercentRateElementInterface;
+export type RateElementInterface = BaseRateElementType | UnprocessedSurchargeAsPercentRateElementInterface;
 
-export type ProcessedRateElementInterface = 
-    | BaseRateElementType
-    | ProcessedSurchargeAsPercentRateElementInterface;
+export type ProcessedRateElementInterface = BaseRateElementType | ProcessedSurchargeAsPercentRateElementInterface;
 
 export type RateComponentInterface = RateElementInterface['rateComponents'][number];
 
 export type RateElementType = RateElementInterface['rateElementType'];
 
 export interface EnergyTimeOfUseRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'EnergyTimeOfUse';
+  rateElementType: RateElementTypeEnum.EnergyTimeOfUse;
   rateComponents: Array<BaseRateComponentInterface & EnergyTimeOfUseArgs>;
-};
+}
 
 export interface BlockedTiersInDaysRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'BlockedTiersInDays';
+  rateElementType: RateElementTypeEnum.BlockedTiersInDays;
   rateComponents: Array<BaseRateComponentInterface & BlockedTiersArgs>;
-};
+}
 
 export interface BlockedTiersInMonthsRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'BlockedTiersInMonths';
+  rateElementType: RateElementTypeEnum.BlockedTiersInMonths;
   rateComponents: Array<BaseRateComponentInterface & BlockedTiersArgs>;
-};
+}
 
 export interface FixedPerDayRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'FixedPerDay';
+  rateElementType: RateElementTypeEnum.FixedPerDay;
   rateComponents: Array<BaseRateComponentInterface>;
-};
+}
 
 export interface FixedPerMonthRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'FixedPerMonth';
+  rateElementType: RateElementTypeEnum.FixedPerMonth;
   rateComponents: Array<BaseRateComponentInterface>;
-};
+}
 
 export interface MonthlyDemandRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'MonthlyDemand';
+  rateElementType: RateElementTypeEnum.MonthlyDemand;
   rateComponents: Array<BaseRateComponentInterface>;
-};
+}
 
 export interface AnnualDemandRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'AnnualDemand';
+  rateElementType: RateElementTypeEnum.AnnualDemand;
   rateComponents: Array<BaseRateComponentInterface>;
-};
+}
 
 export interface MonthlyEnergyRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'MonthlyEnergy';
+  rateElementType: RateElementTypeEnum.MonthlyEnergy;
   rateComponents: Array<BaseRateComponentInterface>;
-};
+}
 
 // The interface that the user uses to definte the rate
 export interface UnprocessedSurchargeAsPercentRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'SurchargeAsPercent';
+  rateElementType: RateElementTypeEnum.SurchargeAsPercent;
   rateComponents: Array<BaseRateComponentInterface & RateElementFilterArgs>;
 }
 
 // The rate element interface that's used after processing
 export interface ProcessedSurchargeAsPercentRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'SurchargeAsPercent';
+  rateElementType: RateElementTypeEnum.SurchargeAsPercent;
   rateComponents: Array<BaseRateComponentInterface & SurchargeAsPercentArgs>;
 }
 
 export interface HourlyEnergyRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'HourlyEnergy';
+  rateElementType: RateElementTypeEnum.HourlyEnergy;
   priceProfile: Array<number> | PriceProfile;
-  rateComponents: Array<BaseRateComponentInterface & HourlyEnergyArgs>,
-};
+  rateComponents: Array<BaseRateComponentInterface & HourlyEnergyArgs>;
+}
 
 export interface DemandTiersInMonthsRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'DemandTiersInMonths';
+  rateElementType: RateElementTypeEnum.DemandTiersInMonths;
   rateComponents: Array<BaseRateComponentInterface & BlockedTiersArgs>;
-};
+}
 
 export interface DemandTimeOfUseRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'DemandTimeOfUse';
+  rateElementType: RateElementTypeEnum.DemandTimeOfUse;
   rateComponents: Array<BaseRateComponentInterface & DemandTimeOfUseArgs>;
-};
+}
 
 export interface DemandPerDayRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'DemandPerDay';
+  rateElementType: RateElementTypeEnum.DemandPerDay;
   rateComponents: Array<BaseRateComponentInterface & DemandPerDayArgs>;
 };
 
 export interface DemandPerDayAveragedRateElementInterface extends BaseRateElementInterface {
-  rateElementType: 'DemandPerDayAveraged';
+  rateElementType: RateElementTypeEnum.DemandPerDayAveraged;
   rateComponents: Array<BaseRateComponentInterface & DemandPerDayAveragedArgs>;
 };
 
@@ -233,17 +229,17 @@ export interface ExpandedDate {
   dayOfWeek: number;
   date: string;
   hourOfYear: number;
-};
+}
 
 export interface ValidatorError {
-  english: string,
-  type: string,
-  data: Record<string, unknown>,
+  english: string;
+  type: string;
+  data: Record<string, unknown>;
 }
 
 export interface LabeledError {
-  label: string
-  errors: Array<ValidatorError>
+  label: string;
+  errors: Array<ValidatorError>;
 }
 
 export interface MinMaxPair {
@@ -256,3 +252,9 @@ export interface RateElementFilterArgs {
   classifications?: Array<RateElementClassification>;
   billingCategories?: Array<BillingCategory>;
 }
+
+/**
+ * Export type definitions of classes so they can be referenced by clients of this package
+ */
+export type {default as RateElement} from '../RateElement';
+export type {default as RateComponent} from '../RateComponent';

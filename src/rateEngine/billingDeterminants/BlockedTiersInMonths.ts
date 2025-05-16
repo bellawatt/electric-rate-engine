@@ -3,7 +3,7 @@ import sumBy from 'lodash/sumBy';
 import times from 'lodash/times';
 import LoadProfile from '../LoadProfile';
 import BillingDeterminants from './_BillingDeterminants';
-import { RateElementClassification, BillingDeterminantsUnits } from '../constants';
+import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 import type { BlockedTiersArgs, LoadProfileFilterArgs } from '../types';
 import convertInfinities from '../utils/convertInfinities';
 
@@ -13,7 +13,7 @@ class BlockedTiersInMonths extends BillingDeterminants {
   private _max: Array<number>;
   private _filters: LoadProfileFilterArgs;
 
-  rateElementType = 'Blocked Tier';
+  rateElementType = RateElementTypeEnum.BlockedTiersInMonths;
   rateElementClassification = RateElementClassification.ENERGY;
   units = BillingDeterminantsUnits.KWH;
 

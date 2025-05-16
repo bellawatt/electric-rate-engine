@@ -1,5 +1,6 @@
-import { times } from 'lodash';
-import type { RateInterface } from '../../types';
+import { times } from "lodash";
+import type { RateInterface } from '../../types/index';
+import { RateElementTypeEnum } from "../../constants/index";
 
 const HOLIDAYS = [
   '2018-01-01',
@@ -22,7 +23,7 @@ const etoua: RateInterface = {
   title: 'Residential Time-Of-Use Service (Tiered)',
   rateElements: [
     {
-      rateElementType: 'FixedPerDay',
+      rateElementType: RateElementTypeEnum.FixedPerDay,
       name: 'Delivery Charge',
       rateComponents: [
         {
@@ -33,7 +34,7 @@ const etoua: RateInterface = {
     },
     {
       name: 'California Clean Climate Credit',
-      rateElementType: 'FixedPerMonth',
+      rateElementType: RateElementTypeEnum.FixedPerMonth,
       rateComponents: [
         {
           charge: [0, 0, 0, -35.73, 0, 0, 0, 0, 0, -35.73, 0, 0],
@@ -43,7 +44,7 @@ const etoua: RateInterface = {
     },
     {
       name: 'Energy Charges',
-      rateElementType: 'EnergyTimeOfUse',
+      rateElementType: RateElementTypeEnum.EnergyTimeOfUse,
       rateComponents: [
         {
           charge: summerPeakCharge,
@@ -108,7 +109,7 @@ const etoua: RateInterface = {
       ],
     },
     {
-      rateElementType: 'BlockedTiersInDays',
+      rateElementType: RateElementTypeEnum.BlockedTiersInDays,
       name: 'First Block Discount',
       rateComponents: [
         {
