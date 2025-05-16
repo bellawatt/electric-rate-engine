@@ -68,6 +68,7 @@ type BaseRateElementType =
   | BlockedTiersInDaysRateElementInterface
   | BlockedTiersInMonthsRateElementInterface
   | DemandPerDayRateElementInterface
+  | DemandPerDayAveragedRateElementInterface
   | DemandTiersInMonthsRateElementInterface
   | DemandTimeOfUseRateElementInterface
   | EnergyTimeOfUseRateElementInterface
@@ -156,7 +157,13 @@ export interface DemandTimeOfUseRateElementInterface extends BaseRateElementInte
 export interface DemandPerDayRateElementInterface extends BaseRateElementInterface {
   rateElementType: RateElementTypeEnum.DemandPerDay;
   rateComponents: Array<BaseRateComponentInterface & DemandPerDayArgs>;
-}
+};
+
+export interface DemandPerDayAveragedRateElementInterface extends BaseRateElementInterface {
+  rateElementType: RateElementTypeEnum.DemandPerDayAveraged;
+  rateComponents: Array<BaseRateComponentInterface & DemandPerDayAveragedArgs>;
+};
+
 
 export interface RateComponentArgs {
   charge: number | Array<number>;
@@ -198,6 +205,10 @@ export interface LoadProfileOptions {
 export interface BlockedTiersArgs extends LoadProfileFilterArgs {
   min: Array<number | 'Infinity'>;
   max: Array<number | 'Infinity'>;
+}
+
+export interface DemandPerDayAveragedArgs extends LoadProfileFilterArgs {
+  numLoadsToAverage: number;
 }
 
 export type DemandPerDayArgs = LoadProfileFilterArgs;

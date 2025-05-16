@@ -12,4 +12,5 @@ export const enum RateElementTypeEnum {
   DemandTiersInMonths = 'DemandTiersInMonths',
   DemandTimeOfUse = 'DemandTimeOfUse',
   DemandPerDay = 'DemandPerDay',
+  DemandPerDayAveraged = 'DemandPerDayAveraged',
 }
