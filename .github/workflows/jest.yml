@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        version: [14, 16, 18, 20, 22]
+        version: [16, 18, 20, 22]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
