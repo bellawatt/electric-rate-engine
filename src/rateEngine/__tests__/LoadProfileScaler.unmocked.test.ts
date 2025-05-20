@@ -1,5 +1,5 @@
 import LoadProfileScaler from '../LoadProfileScaler';
-import {times} from "lodash";
+import { times } from 'lodash';
 import LoadProfile from '../LoadProfile';
 import e1 from '../__mocks__/rates/e-1';
 import RateCalculator from '../RateCalculator';
@@ -24,12 +24,13 @@ const dummyRate: RateInterface = {
       ],
     },
     {
-      rateElementType: RateElementTypeEnum.MonthlyDemand,
+      rateElementType: RateElementTypeEnum.Demand,
       name: 'Demand Charge',
       rateComponents: [
         {
           charge: 20,
           name: 'Demand Charge',
+          demandPeriod: 'monthly',
         },
       ],
     },
@@ -85,7 +86,7 @@ describe('LoadProfileScaler', () => {
   describe('optional debugging', () => {
     it('prints things to the console', () => {
       console.log = jest.fn();
-      
+
       new LoadProfileScaler(initialLoadProfile, { debug: true }).toAverageMonthlyBill(100, e1);
 
       expect(console.log).toHaveBeenCalled();

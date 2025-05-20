@@ -1,14 +1,13 @@
-import LoadProfile from '../../LoadProfile';
+import LoadProfile from '../../../LoadProfile';
 import times from 'lodash/times';
-import DemandPerDay from '../DemandPerDay';
-import data from './DemandPerDayData';
-import { daysPerMonth } from '../../utils/assumptions';
-import type { DemandPerDayArgs } from '../../types';
-
+import data from './DailyDemandData';
+import { daysPerMonth } from '../../../utils/assumptions';
+import type { LoadProfileFilterArgs } from '../../../types';
+import Demand from '../../Demand';
 
 interface TestData {
   name: string;
-  filters: DemandPerDayArgs;
+  filters: LoadProfileFilterArgs;
   inputLoadProfileData: number[];
   billingDeterminantsByMonth: number[];
 }
@@ -17,7 +16,7 @@ const getLoadProfileOfOnes = () => times(8760, () => 1);
 
 const zerosByMonth = times(12, () => 0);
 
-describe('DemandPerDay', () => {
+describe('DailyDemand', () => {
   let loadProfile: LoadProfile;
 
   beforeEach(() => {
@@ -26,13 +25,18 @@ describe('DemandPerDay', () => {
 
   describe('calculate', () => {
     it('calculates demand per day with nothing filtered', () => {
-      const result = new DemandPerDay(
+      const result = new Demand(
         {
-          months: [],
-          daysOfWeek: [],
-          hourStarts: [],
-          onlyOnDays: [],
-          exceptForDays: [],
+          demandPeriod: 'daily',
+          options: {
+            filters: {
+              months: [],
+              daysOfWeek: [],
+              hourStarts: [],
+              onlyOnDays: [],
+              exceptForDays: [],
+            },
+          },
         },
         loadProfile,
       ).calculate();
@@ -43,13 +47,18 @@ describe('DemandPerDay', () => {
     });
 
     it('calculates demand per day with everything filtered', () => {
-      const result = new DemandPerDay(
+      const result = new Demand(
         {
-          months: [],
-          daysOfWeek: [],
-          hourStarts: [],
-          onlyOnDays: ['2015-01-01'],
-          exceptForDays: [],
+          demandPeriod: 'daily',
+          options: {
+            filters: {
+              months: [],
+              daysOfWeek: [],
+              hourStarts: [],
+              onlyOnDays: ['2015-01-01'],
+              exceptForDays: [],
+            },
+          },
         },
         loadProfile,
       ).calculate();
@@ -63,7 +72,8 @@ describe('DemandPerDay', () => {
       let inputLoadProfile = new LoadProfile(inputLoadProfileData, { year: 2019 });
 
       it(`calculates demand per day for ${name}`, () => {
-        const result = new DemandPerDay(filters, inputLoadProfile).calculate();
+        // const result = new DemandPerDay(filters, inputLoadProfile).calculate();
+        const result = new Demand({ demandPeriod: 'daily', options: { filters } }, inputLoadProfile).calculate();
 
         result.forEach((val, i) => {
           expect(val).toBeCloseTo(billingDeterminantsByMonth[i]);
