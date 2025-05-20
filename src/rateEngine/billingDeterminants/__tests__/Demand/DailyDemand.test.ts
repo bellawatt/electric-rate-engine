@@ -72,7 +72,6 @@ describe('DailyDemand', () => {
       let inputLoadProfile = new LoadProfile(inputLoadProfileData, { year: 2019 });
 
       it(`calculates demand per day for ${name}`, () => {
-        // const result = new DemandPerDay(filters, inputLoadProfile).calculate();
         const result = new Demand({ demandPeriod: 'daily', options: { filters } }, inputLoadProfile).calculate();
 
         result.forEach((val, i) => {

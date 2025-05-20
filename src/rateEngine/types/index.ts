@@ -75,7 +75,6 @@ type BaseRateElementType =
   | FixedPerDayRateElementInterface
   | FixedPerMonthRateElementInterface
   | HourlyEnergyRateElementInterface
-  | MonthlyEnergyRateElementInterface
   | MonthlyDemandRateElementInterface
   | MonthlyEnergyRateElementInterface;
 
