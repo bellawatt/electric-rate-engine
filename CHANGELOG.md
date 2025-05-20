@@ -33,6 +33,10 @@ Update any rate element declarations using the deprecated types to use `RateElem
 
 Refer to the updated README for migration examples.
 
+### ⚠️ Node.js Compatibility
+
+Node.js 14 is no longer supported. Please upgrade to Node.js 16 or later.
+
 
 ## [2.0.1] - 2024-01-21
 
