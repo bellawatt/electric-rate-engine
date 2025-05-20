@@ -5,7 +5,12 @@ export const enum RateElementTypeEnum {
   FixedPerDay = 'FixedPerDay',
   FixedPerMonth = 'FixedPerMonth',
   Demand = 'Demand',
+  MonthlyDemand = 'MonthlyDemand',
+  AnnualDemand = 'AnnualDemand',
   MonthlyEnergy = 'MonthlyEnergy',
   SurchargeAsPercent = 'SurchargeAsPercent',
   HourlyEnergy = 'HourlyEnergy',
+  DemandTiersInMonths = 'DemandTiersInMonths',
+  DemandTimeOfUse = 'DemandTimeOfUse',
+  DemandPerDay = 'DemandPerDay',
 }
