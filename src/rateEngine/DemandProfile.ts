@@ -9,8 +9,8 @@ class DemandProfile {
   private _averagingPeriod: AveragingDemandPeriod | undefined;
   private _averagingQty: number | undefined;
 
-  private _min: number;
-  private _max: number;
+  private _min: number | undefined;
+  private _max: number | undefined;
 
   constructor(
     { demandPeriod = 'monthly', averagingPeriod, averagingQty, min, max, ...filters }: DemandArgs,
@@ -23,8 +23,8 @@ class DemandProfile {
     this._averagingPeriod = averagingPeriod;
     this._averagingQty = averagingQty;
 
-    this._min = min !== undefined ? convertInfinity(min) : 0;
-    this._max = max !== undefined ? convertInfinity(max) : Infinity;
+    this._min = min !== undefined ? convertInfinity(min) : undefined;
+    this._max = max !== undefined ? convertInfinity(max) : undefined;
   }
 
   byMonth(): Array<number> {
@@ -95,15 +95,19 @@ class DemandProfile {
   }
 
   private applyTiers(monthlyDemand: Array<Array<number>>): Array<Array<number>> {
+    if (this._min === undefined || this._max === undefined) {
+      return monthlyDemand;
+    }
+
     return monthlyDemand.map((monthDemands) => {
       return monthDemands.map((kw) => {
-        if (kw < this._min) {
+        if (kw < this._min!) {
           return 0;
         }
-        if (kw > this._max) {
-          return this._max - this._min;
+        if (kw > this._max!) {
+          return this._max! - this._min!;
         }
-        return kw - this._min;
+        return kw - this._min!;
       });
     });
   }

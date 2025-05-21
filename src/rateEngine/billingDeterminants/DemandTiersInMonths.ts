@@ -25,9 +25,7 @@ class DemandTiersInMonths extends BillingDeterminants {
     this._min = convertInfinities(min);
     this._max = convertInfinities(max);
     this._filters = filters;
-    throw new Error(
-      "DemandTiersInMonths is deprecated. Use RateElementTypeEnum.Demand with tiered rateComponents."
-    );
+    throw new Error('DemandTiersInMonths is deprecated. Use RateElementTypeEnum.Demand with tiered rateComponents.');
   }
 
   filteredLoadProfile(): LoadProfile {
@@ -40,7 +38,7 @@ class DemandTiersInMonths extends BillingDeterminants {
 
     const kwByMonth = this.filteredLoadProfile().maxByMonth();
 
-    return times(12, i => {
+    return times(12, (i) => {
       const kw = kwByMonth[i] || 0;
       if (kw < mins[i]) {
         return 0;
