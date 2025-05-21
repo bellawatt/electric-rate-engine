@@ -255,8 +255,8 @@ export interface DemandArgs extends LoadProfileFilterArgs {
   demandPeriod: DemandPeriod;
   averagingPeriod?: AveragingDemandPeriod;
   averagingQty?: number;
-  min?: Array<number | 'Infinity'>;
-  max?: Array<number | 'Infinity'>;
+  min?: number | 'Infinity';
+  max?: number | 'Infinity';
 }
 
 /**

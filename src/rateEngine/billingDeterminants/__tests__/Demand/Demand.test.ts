@@ -48,21 +48,8 @@ describe('Demand', () => {
           exceptForDays: [],
           averagingPeriod: 'monthly',
           averagingQty: 3, // Top 3 days per month
-          min: [10, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Min demand per month
-          max: [
-            20,
-            'Infinity',
-            35,
-            'Infinity',
-            'Infinity',
-            'Infinity',
-            'Infinity',
-            'Infinity',
-            'Infinity',
-            'Infinity',
-            'Infinity',
-            'Infinity',
-          ], // Max demand per month
+          min: 10,
+          max: 20,
         },
         loadProfile,
       ).calculate();
@@ -74,12 +61,12 @@ describe('Demand', () => {
       //   => mean = 8.33
 
       // March
-      // Apply tiers (min=10, max=35):
-      //    => [0, 20, 25, 0, ...]
-      // Pick top 3 => [20, 25, 0]
-      //   => mean = 15
+      // Apply tiers (min=10, max=20):
+      //    => [0, 10, 10, 0, ...]
+      // Pick top 3 => [10, 10, 0]
+      //   => mean = 6.667
 
-      const expected = [8.33, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      const expected = [8.33, 0, 6.667, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
       result.forEach((val, i) => {
         expect(val).toBeCloseTo(expected[i], 2);

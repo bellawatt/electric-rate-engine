@@ -139,7 +139,7 @@ const exampleBlockedTiersInDaysData = {
 
 The `Demand` billing determinant computes values based on maximum demand within a specified period (e.g. monthly, daily, annual). It supports:
 
-* Tiered billing determinants, with per-month min/max values for each tier
+* Tiered billing determinants, with min/max values for each tier
 
 * Averaging, such as taking the top 3 daily peaks per month
 
@@ -173,24 +173,32 @@ const demand = {
   name: 'Tiered Demand with Filters and Averaging',
   rateComponents: [
     {
-      charge: 0.025,
-      min: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      max: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-      name: 'Base Tier',
-    },
-    {
       charge: 0.05,
-      min: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-      max: ['Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity'],
+      name: 'Winter Tier 1',
+      min: 0,
+      max: 5,
       months: [0, 1, 2, 3, 4, 9, 10, 11],
-      name: 'Winter Tier',
     },
     {
-      charge: 0.075,
-      min: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-      max: ['Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity', 'Infinity'],
+      charge: 0.1,
+      name: 'Winter Tier 2',
+      min: 5,
+      max: 'Infinity',
+      months: [0, 1, 2, 3, 4, 9, 10, 11],
+    },
+    {
+      charge: 0.06,
+      name: 'Summer Tier 1',
+      min: 0,
+      max: 7,
       months: [5, 6, 7, 8],
-      name: 'Summer Tier',
+    },
+    {
+      charge: 0.13,
+      name: 'Summer Tier 2',
+      min: 7,
+      max: 'Infinity',
+      months: [5, 6, 7, 8],
     },
   ],
   demandPeriod: 'daily', // 'daily' | 'monthly' | 'annual'

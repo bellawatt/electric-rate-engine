@@ -1,7 +1,7 @@
 import { groupBy, mean, sum, times } from 'lodash';
 import LoadProfile from './LoadProfile';
 import { AveragingDemandPeriod, DemandArgs, DemandPeriod } from './types';
-import convertInfinities from './utils/convertInfinities';
+import { convertInfinity } from './utils/convertInfinities';
 
 class DemandProfile {
   private _loadProfile: LoadProfile;
@@ -9,8 +9,8 @@ class DemandProfile {
   private _averagingPeriod: AveragingDemandPeriod | undefined;
   private _averagingQty: number | undefined;
 
-  private _min: Array<number> | null;
-  private _max: Array<number> | null;
+  private _min: number;
+  private _max: number;
 
   constructor(
     { demandPeriod = 'monthly', averagingPeriod, averagingQty, min, max, ...filters }: DemandArgs,
@@ -23,8 +23,8 @@ class DemandProfile {
     this._averagingPeriod = averagingPeriod;
     this._averagingQty = averagingQty;
 
-    this._min = min ? convertInfinities(min) : null;
-    this._max = max ? convertInfinities(max) : null;
+    this._min = min !== undefined ? convertInfinity(min) : 0;
+    this._max = max !== undefined ? convertInfinity(max) : Infinity;
   }
 
   byMonth(): Array<number> {
@@ -95,19 +95,15 @@ class DemandProfile {
   }
 
   private applyTiers(monthlyDemand: Array<Array<number>>): Array<Array<number>> {
-    if (!this._min || !this._max) {
-      return monthlyDemand;
-    }
-
-    return monthlyDemand.map((monthDemands, i) => {
+    return monthlyDemand.map((monthDemands) => {
       return monthDemands.map((kw) => {
-        if (kw < this._min![i]) {
+        if (kw < this._min) {
           return 0;
         }
-        if (kw > this._max![i]) {
-          return this._max![i] - this._min![i];
+        if (kw > this._max) {
+          return this._max - this._min;
         }
-        return kw - this._min![i];
+        return kw - this._min;
       });
     });
   }
