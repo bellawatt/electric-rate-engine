@@ -6,11 +6,11 @@ import { convertInfinity } from './utils/convertInfinities';
 class DemandProfile {
   private _loadProfile: LoadProfile;
   private _demandPeriod: DemandPeriod;
-  private _averagingPeriod: AveragingDemandPeriod | undefined;
-  private _averagingQty: number | undefined;
+  private _averagingPeriod?: AveragingDemandPeriod;
+  private _averagingQty?: number;
 
-  private _min: number | undefined;
-  private _max: number | undefined;
+  private _min?: number;
+  private _max?: number;
 
   constructor(
     { demandPeriod = 'monthly', averagingPeriod, averagingQty, min, max, ...filters }: DemandArgs,
