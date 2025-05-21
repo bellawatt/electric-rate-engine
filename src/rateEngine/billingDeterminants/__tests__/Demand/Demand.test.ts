@@ -13,10 +13,8 @@ describe('Demand', () => {
         new Demand(
           {
             demandPeriod: 'monthly',
-            options: {
-              averagingQty: 3,
-              averagingPeriod: 'monthly',
-            },
+            averagingQty: 3,
+            averagingPeriod: 'monthly',
           },
           loadProfile,
         ).calculate();
@@ -43,32 +41,28 @@ describe('Demand', () => {
       const result = new Demand(
         {
           demandPeriod: 'daily',
-          options: {
-            filters: {
-              months: [0, 2], // Only Jan and Mar
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: [],
-              exceptForDays: [],
-            },
-            averagingPeriod: 'monthly',
-            averagingQty: 3, // Top 3 days per month
-            min: [10, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Min demand per month
-            max: [
-              20,
-              'Infinity',
-              35,
-              'Infinity',
-              'Infinity',
-              'Infinity',
-              'Infinity',
-              'Infinity',
-              'Infinity',
-              'Infinity',
-              'Infinity',
-              'Infinity',
-            ], // Max demand per month
-          },
+          months: [0, 2], // Only Jan and Mar
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: [],
+          exceptForDays: [],
+          averagingPeriod: 'monthly',
+          averagingQty: 3, // Top 3 days per month
+          min: [10, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Min demand per month
+          max: [
+            20,
+            'Infinity',
+            35,
+            'Infinity',
+            'Infinity',
+            'Infinity',
+            'Infinity',
+            'Infinity',
+            'Infinity',
+            'Infinity',
+            'Infinity',
+            'Infinity',
+          ], // Max demand per month
         },
         loadProfile,
       ).calculate();

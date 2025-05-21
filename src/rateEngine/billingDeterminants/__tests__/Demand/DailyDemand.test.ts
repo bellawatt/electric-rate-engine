@@ -28,15 +28,11 @@ describe('DailyDemand', () => {
       const result = new Demand(
         {
           demandPeriod: 'daily',
-          options: {
-            filters: {
-              months: [],
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: [],
-              exceptForDays: [],
-            },
-          },
+          months: [],
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: [],
+          exceptForDays: [],
         },
         loadProfile,
       ).calculate();
@@ -50,15 +46,11 @@ describe('DailyDemand', () => {
       const result = new Demand(
         {
           demandPeriod: 'daily',
-          options: {
-            filters: {
-              months: [],
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: ['2015-01-01'],
-              exceptForDays: [],
-            },
-          },
+          months: [],
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: ['2015-01-01'],
+          exceptForDays: [],
         },
         loadProfile,
       ).calculate();
@@ -72,7 +64,7 @@ describe('DailyDemand', () => {
       let inputLoadProfile = new LoadProfile(inputLoadProfileData, { year: 2019 });
 
       it(`calculates demand per day for ${name}`, () => {
-        const result = new Demand({ demandPeriod: 'daily', options: { filters } }, inputLoadProfile).calculate();
+        const result = new Demand({ demandPeriod: 'daily', ...filters }, inputLoadProfile).calculate();
 
         result.forEach((val, i) => {
           expect(val).toBeCloseTo(billingDeterminantsByMonth[i]);

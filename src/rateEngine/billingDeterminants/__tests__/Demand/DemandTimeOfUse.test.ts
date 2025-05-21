@@ -34,15 +34,11 @@ describe('DemandTimeOfUse', () => {
       const result = new Demand(
         {
           demandPeriod: 'monthly',
-          options: {
-            filters: {
-              months: [],
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: [],
-              exceptForDays: [],
-            },
-          },
+          months: [],
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: [],
+          exceptForDays: [],
         },
         loadProfile,
       ).calculate();
@@ -54,15 +50,11 @@ describe('DemandTimeOfUse', () => {
       const result = new Demand(
         {
           demandPeriod: 'monthly',
-          options: {
-            filters: {
-              months: [],
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: ['2015-01-01'],
-              exceptForDays: [],
-            },
-          },
+          months: [],
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: ['2015-01-01'],
+          exceptForDays: [],
         },
         loadProfile,
       ).calculate();
@@ -77,9 +69,7 @@ describe('DemandTimeOfUse', () => {
         const result = new Demand(
           {
             demandPeriod: 'monthly',
-            options: {
-              filters,
-            },
+            ...filters,
           },
           inputLoadProfile,
         ).calculate();

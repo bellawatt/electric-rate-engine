@@ -18,17 +18,13 @@ describe('DailyDemandAveraged', () => {
       const result = new Demand(
         {
           demandPeriod: 'daily',
-          options: {
-            filters: {
-              months: [],
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: [],
-              exceptForDays: [],
-            },
-            averagingQty: 3,
-            averagingPeriod: 'monthly',
-          },
+          months: [],
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: [],
+          exceptForDays: [],
+          averagingQty: 3,
+          averagingPeriod: 'monthly',
         },
         loadProfile,
       ).calculate();
@@ -42,17 +38,13 @@ describe('DailyDemandAveraged', () => {
       const result = new Demand(
         {
           demandPeriod: 'daily',
-          options: {
-            filters: {
-              months: [],
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: ['2015-01-01'],
-              exceptForDays: [],
-            },
-            averagingQty: 3,
-            averagingPeriod: 'monthly',
-          },
+          months: [],
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: ['2015-01-01'],
+          exceptForDays: [],
+          averagingQty: 3,
+          averagingPeriod: 'monthly',
         },
         loadProfile,
       ).calculate();
@@ -86,17 +78,13 @@ describe('DailyDemandAveraged', () => {
       const result = new Demand(
         {
           demandPeriod: 'daily',
-          options: {
-            filters: {
-              months: [],
-              daysOfWeek: [],
-              hourStarts: [],
-              onlyOnDays: [],
-              exceptForDays: [],
-            },
-            averagingQty: 3,
-            averagingPeriod: 'monthly',
-          },
+          months: [],
+          daysOfWeek: [],
+          hourStarts: [],
+          onlyOnDays: [],
+          exceptForDays: [],
+          averagingQty: 3,
+          averagingPeriod: 'monthly',
         },
         loadProfile,
       ).calculate();
@@ -136,17 +124,13 @@ describe('DailyDemandAveraged', () => {
       const result = new Demand(
         {
           demandPeriod: 'daily',
-          options: {
-            filters: {
-              months: [2, 3, 4],
-              daysOfWeek: [],
-              hourStarts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-              onlyOnDays: [],
-              exceptForDays: [],
-            },
-            averagingQty: 4,
-            averagingPeriod: 'monthly',
-          },
+          months: [2, 3, 4],
+          daysOfWeek: [],
+          hourStarts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          onlyOnDays: [],
+          exceptForDays: [],
+          averagingQty: 4,
+          averagingPeriod: 'monthly',
         },
         loadProfile,
       ).calculate();

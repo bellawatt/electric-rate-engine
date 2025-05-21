@@ -22,10 +22,8 @@ describe('DemandTiers', () => {
       const tiers = new Demand(
         {
           demandPeriod: 'monthly',
-          options: {
-            min: Array(12).fill(0),
-            max: Array(12).fill(Infinity),
-          },
+          min: Array(12).fill(0),
+          max: Array(12).fill(Infinity),
         },
         loadProfile,
       );
@@ -37,10 +35,8 @@ describe('DemandTiers', () => {
       const tiers = new Demand(
         {
           demandPeriod: 'monthly',
-          options: {
-            min: Array(12).fill(1),
-            max: Array(12).fill(Infinity),
-          },
+          min: Array(12).fill(1),
+          max: Array(12).fill(Infinity),
         },
         loadProfile,
       );
@@ -52,10 +48,8 @@ describe('DemandTiers', () => {
       const tiers = new Demand(
         {
           demandPeriod: 'monthly',
-          options: {
-            min: Array(12).fill(0),
-            max: Array(12).fill(1),
-          },
+          min: Array(12).fill(0),
+          max: Array(12).fill(1),
         },
         loadProfile,
       );
@@ -69,10 +63,8 @@ describe('DemandTiers', () => {
       const tiers = new Demand(
         {
           demandPeriod: 'monthly',
-          options: {
-            min: Array(12).fill(MIN),
-            max: Array(12).fill(MAX),
-          },
+          min: Array(12).fill(MIN),
+          max: Array(12).fill(MAX),
         },
         loadProfile,
       );
@@ -87,13 +79,9 @@ describe('DemandTiers', () => {
       const tiers = new Demand(
         {
           demandPeriod: 'monthly',
-          options: {
-            min: Array(12).fill(0),
-            max: Array(12).fill(Infinity),
-            filters: {
-              months: [0, 1],
-            },
-          },
+          min: Array(12).fill(0),
+          max: Array(12).fill(Infinity),
+          months: [0, 1],
         },
         loadProfile,
       );

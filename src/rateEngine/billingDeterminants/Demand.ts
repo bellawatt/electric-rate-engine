@@ -1,25 +1,21 @@
 import { BillingDeterminantsUnits, RateElementClassification, RateElementTypeEnum } from '../constants';
 import DemandProfile from '../DemandProfile';
 import LoadProfile from '../LoadProfile';
-import { DemandArgs, DemandPeriod } from '../types';
+import { DemandArgs } from '../types';
 import BillingDeterminants from './_BillingDeterminants';
 
 class Demand extends BillingDeterminants {
   private _loadProfile: LoadProfile;
   private _demandProfile: DemandProfile;
-  private _demandPeriod: DemandPeriod;
 
   rateElementType = RateElementTypeEnum.Demand;
   rateElementClassification = RateElementClassification.DEMAND;
   units = BillingDeterminantsUnits.KW;
 
-  constructor({ demandPeriod, options }: DemandArgs, loadProfile: LoadProfile) {
+  constructor(args: DemandArgs, loadProfile: LoadProfile) {
     super();
-
     this._loadProfile = loadProfile;
-    this._demandPeriod = demandPeriod;
-
-    this._demandProfile = new DemandProfile(this._loadProfile, this._demandPeriod, options || {});
+    this._demandProfile = new DemandProfile(args, this._loadProfile);
   }
 
   calculate(): Array<number> {

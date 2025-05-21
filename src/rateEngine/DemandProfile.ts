@@ -1,6 +1,6 @@
 import { groupBy, mean, sum, times } from 'lodash';
 import LoadProfile from './LoadProfile';
-import { AveragingDemandPeriod, DemandOptions, DemandPeriod } from './types';
+import { AveragingDemandPeriod, DemandArgs, DemandPeriod } from './types';
 import convertInfinities from './utils/convertInfinities';
 
 class DemandProfile {
@@ -13,9 +13,8 @@ class DemandProfile {
   private _max: Array<number> | null;
 
   constructor(
+    { demandPeriod = 'monthly', averagingPeriod, averagingQty, min, max, ...filters }: DemandArgs,
     loadProfile: LoadProfile,
-    demandPeriod: DemandPeriod = 'monthly',
-    { averagingPeriod, averagingQty, min, max, filters }: Partial<DemandOptions> = {},
   ) {
     this.validatePeriods(averagingPeriod, demandPeriod);
 

@@ -250,17 +250,13 @@ export interface RateElementFilterArgs {
 
 export type DemandPeriod = 'monthly' | 'daily' | 'annual';
 export type AveragingDemandPeriod = 'monthly' | undefined; // | 'annual'; // can't average daily since its our most granular period; no need to implement annual averaging yet
-export type DemandOptions = {
-  averagingPeriod: AveragingDemandPeriod;
-  averagingQty: number;
-  min: Array<number | 'Infinity'>;
-  max: Array<number | 'Infinity'>;
-  filters: LoadProfileFilterArgs;
-};
 
 export interface DemandArgs extends LoadProfileFilterArgs {
   demandPeriod: DemandPeriod;
-  options?: Partial<DemandOptions>;
+  averagingPeriod?: AveragingDemandPeriod;
+  averagingQty?: number;
+  min?: Array<number | 'Infinity'>;
+  max?: Array<number | 'Infinity'>;
 }
 
 /**

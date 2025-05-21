@@ -151,9 +151,7 @@ const demand = {
   rateElementType: RateElementTypeEnum.Demand,
   name: 'Winter-Only Demand Charge',
   demandPeriod: 'monthly',
-  filters: {
-    months: [0, 1, 2, 3, 4, 9, 10, 11],
-  },
+  months: [0, 1, 2, 3, 4, 9, 10, 11],
 };
 ```
 
@@ -163,10 +161,8 @@ const demand = {
   rateElementType: RateElementTypeEnum.Demand,
   name: 'Simple Demand Averaging',
   demandPeriod: 'daily',
-  options: {
-    averagingPeriod: 'monthly',
-    averagingQty: 3, // Average top 3 daily demand values each month
-  },
+  averagingPeriod: 'monthly',
+  averagingQty: 3, // Average top 3 daily demand values each month
 };
 ```
 
@@ -197,18 +193,14 @@ const demand = {
       name: 'Summer Tier',
     },
   ],
-  options: {
-    demandPeriod: 'daily', // 'daily' | 'monthly' | 'annual'
-    averagingQty: 3,       // Average top 3 days per month
-    averagingPeriod: 'monthly', // Averaging occurs across a month
-    filters: {
-      months: [5, 6, 7, 8],
-      daysOfWeek: [1, 2, 3, 4, 5],
-      hourStarts: [14, 15, 16],
-      onlyOnDays: [],
-      exceptForDays: [],
-    },
-  },
+  demandPeriod: 'daily', // 'daily' | 'monthly' | 'annual'
+  averagingQty: 3,       // Average top 3 days per month
+  averagingPeriod: 'monthly', // Averaging occurs across a month
+  months: [5, 6, 7, 8],
+  daysOfWeek: [1, 2, 3, 4, 5],
+  hourStarts: [14, 15, 16],
+  onlyOnDays: [],
+  exceptForDays: [],
 };
 ```
 
