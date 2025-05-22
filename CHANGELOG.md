@@ -4,6 +4,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-05-20
+
+### ⚠️ Breaking Changes
+
+#### Unified `Demand` Rate Element
+
+The following `RateElementType` values have been **deprecated** and replaced with a single, flexible `Demand` type:
+
+- `MonthlyDemand`
+- `AnnualDemand`
+- `DemandPerDay`
+- `DemandTiersInMonths`
+- `DemandTimeOfUse`
+
+They are now fully supported by the new `RateElementTypeEnum.Demand`, which supports:
+
+- **Configurable demand periods** (`daily`, `monthly`, `annual`)
+- **Optional averaging** over a `monthly` period
+- **Optional tiered pricing**
+- **Support for load profile filters**
+
+This change simplifies rate modeling and increases flexibility by allowing a single structure to handle all variations of demand-based pricing.
+
+#### Migration Notes
+
+Update any rate element declarations using the deprecated types to use `RateElementTypeEnum.Demand` and configure the desired behavior using the `demandPeriod`, `options`, `filters`, and `rateComponents` fields.
+
+Refer to the updated README for migration examples.
+
+### ⚠️ Node.js Compatibility
+
+Node.js 14 is no longer supported. Please upgrade to Node.js 16 or later.
+
+
 ## [2.0.1] - 2024-01-21
 
 * Build for CommonJS so that package works correctly in Node.js environments (like vitest)

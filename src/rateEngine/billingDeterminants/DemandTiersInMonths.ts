@@ -5,6 +5,9 @@ import { BlockedTiersArgs, LoadProfileFilterArgs } from '../types';
 import convertInfinities from '../utils/convertInfinities';
 import BillingDeterminants from './_BillingDeterminants';
 
+/**
+ * @deprecated Use the unified `Demand` class instead.
+ */
 class DemandTiersInMonths extends BillingDeterminants {
   private _loadProfile: LoadProfile;
   private _min: Array<number>;
@@ -22,6 +25,7 @@ class DemandTiersInMonths extends BillingDeterminants {
     this._min = convertInfinities(min);
     this._max = convertInfinities(max);
     this._filters = filters;
+    throw new Error('DemandTiersInMonths is deprecated. Use RateElementTypeEnum.Demand with tiered rateComponents.');
   }
 
   filteredLoadProfile(): LoadProfile {
@@ -34,7 +38,7 @@ class DemandTiersInMonths extends BillingDeterminants {
 
     const kwByMonth = this.filteredLoadProfile().maxByMonth();
 
-    return times(12, i => {
+    return times(12, (i) => {
       const kw = kwByMonth[i] || 0;
       if (kw < mins[i]) {
         return 0;

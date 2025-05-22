@@ -6,6 +6,9 @@ import sum from 'lodash/sum';
 import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 import type { DemandPerDayArgs, LoadProfileFilterArgs } from '../types';
 
+/**
+ * @deprecated Use the unified `Demand` class instead with demandPeriod: "daily".
+ */
 class DemandPerDay extends BillingDeterminants {
   private _filters: LoadProfileFilterArgs;
   private _loadProfile: LoadProfile;
@@ -19,6 +22,9 @@ class DemandPerDay extends BillingDeterminants {
 
     this._filters = filters;
     this._loadProfile = loadProfile;
+    throw new Error(
+      'DemandPerDay has been deprecated. Please use RateElementTypeEnum.Demand with demandPeriod: "daily".',
+    );
   }
 
   filteredLoadProfile(): LoadProfile {

@@ -3,6 +3,9 @@ import LoadProfile from '../LoadProfile';
 import times from 'lodash/times';
 import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 
+/**
+ * @deprecated Use the unified `Demand` class instead with demandPeriod: "daily".
+ */
 class AnnualDemand extends BillingDeterminants {
   private _loadProfile: LoadProfile;
 
@@ -14,6 +17,9 @@ class AnnualDemand extends BillingDeterminants {
     super();
 
     this._loadProfile = loadProfile;
+    throw new Error(
+      'AnnualDemand has been deprecated. Please use RateElementTypeEnum.Demand with demandPeriod: "annual".',
+    );
   }
 
   calculate(): Array<number> {

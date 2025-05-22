@@ -1,6 +1,7 @@
 import AnnualDemand from './billingDeterminants/AnnualDemand';
 import BlockedTiersInDays from './billingDeterminants/BlockedTiersInDays';
 import BlockedTiersInMonths from './billingDeterminants/BlockedTiersInMonths';
+import Demand from './billingDeterminants/Demand';
 import DemandPerDay from './billingDeterminants/DemandPerDay';
 import DemandTiersInMonths from './billingDeterminants/DemandTiersInMonths';
 import DemandTimeOfUse from './billingDeterminants/DemandTimeOfUse';
@@ -37,6 +38,8 @@ class BillingDeterminantsFactory {
         return rateComponents.map(({ charge, name, }) => ({ charge, name, billingDeterminants: new MonthlyDemand(loadProfile) }));
       case 'AnnualDemand':
         return rateComponents.map(({ charge, name, }) => ({ charge, name, billingDeterminants: new AnnualDemand(loadProfile) }));
+      case 'Demand':
+        return rateComponents.map(({ charge, name, ...args }) => ({ charge, name, billingDeterminants: new Demand(args, loadProfile) }));
       case 'MonthlyEnergy':
         return rateComponents.map(({ charge, name, }) => ({ charge, name, billingDeterminants: new MonthlyEnergy(loadProfile) }));
       case 'SurchargeAsPercent':

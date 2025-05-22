@@ -1,12 +1,12 @@
-import LoadProfile from '../../LoadProfile';
+import LoadProfile from '../../../LoadProfile';
 import times from 'lodash/times';
-import DemandTimeOfUse from '../DemandTimeOfUse';
 import data from './DemandTimeOfUseData';
-import type { DemandTimeOfUseArgs } from '../../types';
+import type { LoadProfileFilterArgs } from '../../../types';
+import Demand from '../../Demand';
 
 interface TestData {
   name: string;
-  filters: DemandTimeOfUseArgs;
+  filters: LoadProfileFilterArgs;
   inputLoadProfileData: number[];
   billingDeterminantsByMonth: number[];
 }
@@ -24,9 +24,16 @@ describe('DemandTimeOfUse', () => {
   });
 
   describe('calculate', () => {
-    it('calculates energy time of use with nothing filtered', () => {
-      const result = new DemandTimeOfUse(
+    it('calculates demand time of use with nothing filtered and no filters argument', () => {
+      const result = new Demand({ demandPeriod: 'monthly' }, loadProfile).calculate();
+
+      expect(result).toEqual(onesByMonth);
+    });
+
+    it('calculates demand time of use with nothing filtered', () => {
+      const result = new Demand(
         {
+          demandPeriod: 'monthly',
           months: [],
           daysOfWeek: [],
           hourStarts: [],
@@ -39,9 +46,10 @@ describe('DemandTimeOfUse', () => {
       expect(result).toEqual(onesByMonth);
     });
 
-    it('calculates energy time of use with everything filtered', () => {
-      const result = new DemandTimeOfUse(
+    it('calculates demand time of use with everything filtered', () => {
+      const result = new Demand(
         {
+          demandPeriod: 'monthly',
           months: [],
           daysOfWeek: [],
           hourStarts: [],
@@ -57,8 +65,14 @@ describe('DemandTimeOfUse', () => {
     data.forEach(({ name, filters, inputLoadProfileData, billingDeterminantsByMonth }: TestData) => {
       let inputLoadProfile = new LoadProfile(inputLoadProfileData, { year: 2019 });
 
-      it(`calculates energy time of use for ${name} filters`, () => {
-        const result = new DemandTimeOfUse(filters, inputLoadProfile).calculate();
+      it(`calculates demand time of use for ${name} filters`, () => {
+        const result = new Demand(
+          {
+            demandPeriod: 'monthly',
+            ...filters,
+          },
+          inputLoadProfile,
+        ).calculate();
 
         expect(result).toEqual(billingDeterminantsByMonth);
       });

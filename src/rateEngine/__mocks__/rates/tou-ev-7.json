@@ -1,12 +1,13 @@
 [
   {
     "name": "Demand Charge",
-    "rateElementType": "MonthlyDemand",
+    "rateElementType": "Demand",
     "classification": "demand",
     "rateComponents": [
       {
         "name": "Monthly Demand Charge",
-        "charge": 0
+        "charge": 0,
+        "demandPeriod": "monthly"
       }
     ]
   },

@@ -21,7 +21,7 @@ The Rate Calculator is composed of three levels of abstraction:
 In addition to the rate, a load profile must be provided in order to calculate the rate.
 
 ```js
-import { RateCalculator, RatElementTypeEnum } from '@bellawatt/electric-rate-engine';
+import { RateCalculator, RateElementTypeEnum } from '@bellawatt/electric-rate-engine';
 
 const loadProfile = // array of 8760 load profile hours
 
@@ -30,7 +30,7 @@ const rate = {
   title: 'Residential Time-Of-Use Service (Tiered)',
   rateElements: [
     {
-      rateElementType: RatElementTypeEnum.FixedPerDay,
+      rateElementType: RateElementTypeEnum.FixedPerDay,
       name: 'Delivery Charge',
       id: 'an-id', // optional, can be used to filter rate elements
       classification: 'energy', // optional, one of 'energy', 'demand', 'fixed', or 'surcharge'
@@ -43,7 +43,7 @@ const rate = {
       ],
     },
     {
-      rateElementType: RatElementTypeEnum.BlockedTiersInDays,
+      rateElementType: RateElementTypeEnum.BlockedTiersInDays,
       name: 'First Block Discount',
       rateComponents: [
         {
@@ -65,7 +65,7 @@ const rateCalculator = new RateCalculator({...rate, loadProfile});
 **FixedPerDay**: A fixed cost per day.
 ```js
 const exampleFixedPerDayData = {
-  rateElementType: RatElementTypeEnum.FixedPerDay,
+  rateElementType: RateElementTypeEnum.FixedPerDay,
   name: 'Delivery Charge',
   rateComponents: [
     {
@@ -81,7 +81,7 @@ const exampleFixedPerDayData = {
 ```js
 const exampleFixedPerMonthData = {
   name: 'California Clean Climate Credit',
-  rateElementType: RatElementTypeEnum.FixedPerMonth,
+  rateElementType: RateElementTypeEnum.FixedPerMonth,
   rateComponents: [
     {
       charge: [0, 0, 0, -35.73, 0, 0, 0, 0, 0, -35.73, 0, 0],
@@ -96,7 +96,7 @@ const HOLIDAYS = ['2018-01-01','2018-02-19','2018-05-28','2018-07-04','2018-09-0
 
 const exampleEnergyTimeOfUseData = {
   name: 'Energy Charges',
-  rateElementType: RatElementTypeEnum.EnergyTimeOfUse,
+  rateElementType: RateElementTypeEnum.EnergyTimeOfUse,
   rateComponents: [
     {
       charge: 0.43293,
@@ -122,7 +122,7 @@ const exampleEnergyTimeOfUseData = {
 **BlockedTiersInDays**: An inclining or declining block rate structure, where blocks are measured on a per-day basis.
 ```js
 const exampleBlockedTiersInDaysData = {
-  rateElementType: RatElementTypeEnum.BlockedTiersInDays,
+  rateElementType: RateElementTypeEnum.BlockedTiersInDays,
   name: 'First Block Discount',
   rateComponents: [
     {
@@ -135,35 +135,81 @@ const exampleBlockedTiersInDaysData = {
 }
 ```
 
-**DemandTiersInMonths**: A blocked rate structure, based on the max demand for every month. Accepts load profile filters to model seasonal rates.
+**Demand**: A flexible demand rate structure based on peak load, with tiering, averaging, and load profile filters.
 
+The `Demand` billing determinant computes values based on maximum demand within a specified period (e.g. monthly, daily, annual). It supports:
+
+* Tiered billing determinants, with min/max values for each tier
+
+* Averaging, such as taking the top 3 daily peaks per month
+
+* Filtering, to include only specific months, days, hours, or dates
+
+Basic Example – Monthly Demand with Seasonal Filter
 ```js
-const demandTiers = {
-  rateElementType: RatElementTypeEnum.DemandTiersInMonths,
-  name: 'A Tiered Rate by Max Demand',
+const demand = {
+  rateElementType: RateElementTypeEnum.Demand,
+  name: 'Winter-Only Demand Charge',
+  demandPeriod: 'monthly',
+  months: [0, 1, 2, 3, 4, 9, 10, 11],
+};
+```
+
+Averaged Daily Demand – Top 3 Peaks per Month
+```js
+const demand = {
+  rateElementType: RateElementTypeEnum.Demand,
+  name: 'Simple Demand Averaging',
+  demandPeriod: 'daily',
+  averagingPeriod: 'monthly',
+  averagingQty: 3, // Average top 3 daily demand values each month
+};
+```
+
+Complex Demand – Tiered Demand with Averaging and Filtering
+```js
+const demand = {
+  rateElementType: RateElementTypeEnum.Demand,
+  name: 'Tiered Demand with Filters and Averaging',
   rateComponents: [
     {
-      charge: 0.025,
-      min: [0,0,0,0,0,0,0,0,0,0,0,0],
-      max: [5,5,5,5,5,5,5,5,5,5,5,5],
-      name: 'First 5 kW',
-    },
-    {
       charge: 0.05,
-      min: [5,5,5,5,5,5,5,5,5,5,5,5],
-      max: ["Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity"],
-      months: [0,1,2,3,4,9,10,11],
-      name: 'Winter demand charges',
+      name: 'Winter Tier 1',
+      min: 0,
+      max: 5,
+      months: [0, 1, 2, 3, 4, 9, 10, 11],
     },
     {
-      charge: 0.075,
-      min: [5,5,5,5,5,5,5,5,5,5,5,5],
-      max: ["Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity","Infinity"],
-      months: [5,6,7,8],
-      name: 'Summer demand charges',
+      charge: 0.1,
+      name: 'Winter Tier 2',
+      min: 5,
+      max: 'Infinity',
+      months: [0, 1, 2, 3, 4, 9, 10, 11],
     },
-  ]
-}
+    {
+      charge: 0.06,
+      name: 'Summer Tier 1',
+      min: 0,
+      max: 7,
+      months: [5, 6, 7, 8],
+    },
+    {
+      charge: 0.13,
+      name: 'Summer Tier 2',
+      min: 7,
+      max: 'Infinity',
+      months: [5, 6, 7, 8],
+    },
+  ],
+  demandPeriod: 'daily', // 'daily' | 'monthly' | 'annual'
+  averagingQty: 3,       // Average top 3 days per month
+  averagingPeriod: 'monthly', // Averaging occurs across a month
+  months: [5, 6, 7, 8],
+  daysOfWeek: [1, 2, 3, 4, 5],
+  hourStarts: [14, 15, 16],
+  onlyOnDays: [],
+  exceptForDays: [],
+};
 ```
 
 **SurchargeAsPercent**: Used to specify surcharges such as taxes or other percent based charges. For example, some rates have "improvement" charges which are calculated based on a subset of the other rate elements.
@@ -175,7 +221,7 @@ Behind the scenes, the calculator will generate individual rate components for e
 ```js
 const exampleWithSurcharges = [
   {
-    rateElementType: RatElementTypeEnum.SurchargeAsPercent,
+    rateElementType: RateElementTypeEnum.SurchargeAsPercent,
     name: 'Sales tax',
     rateComponents: [
       {
@@ -185,18 +231,18 @@ const exampleWithSurcharges = [
     ],
   },
   {
-    rateElementType: RatElementTypeEnum.FixedPerMonth,
+    rateElementType: RateElementTypeEnum.FixedPerMonth,
     // rest of data
   },
   {
-    rateElementType: RatElementTypeEnum.MonthlyEnergy,
+    rateElementType: RateElementTypeEnum.MonthlyEnergy,
     // rest of data
   }
 ];
 
 const secondSurchargeExample = [
   {
-    rateElementType: RatElementTypeEnum.SurchargeAsPercent,
+    rateElementType: RateElementTypeEnum.SurchargeAsPercent,
     name: 'A charge that only applies to certain elements',
     rateComponents: [
       {
@@ -208,19 +254,19 @@ const secondSurchargeExample = [
   },
   {
     billingCategory: 'delivery',
-    rateElementType: RatElementTypeEnum.FixedPerMonth,
+    rateElementType: RateElementTypeEnum.FixedPerMonth,
     // rest of data
   },
   {
     billingCategory: 'delivery',
-    rateElementType: RatElementTypeEnum.MonthlyEnergy,
+    rateElementType: RateElementTypeEnum.MonthlyEnergy,
     // rest of data
   },
   {
     // This element will not be surcharged because the surcharge is
     // configured to only apply to delivery billing categories.
     billingCategory: 'supply',
-    rateElementType: RatElementTypeEnum.MonthlyDemand,
+    rateElementType: RateElementTypeEnum.Demand,
     // rest of data
   },
 ]

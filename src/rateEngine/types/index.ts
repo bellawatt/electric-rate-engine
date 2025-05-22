@@ -67,6 +67,7 @@ type BaseRateElementType =
   | AnnualDemandRateElementInterface
   | BlockedTiersInDaysRateElementInterface
   | BlockedTiersInMonthsRateElementInterface
+  | DemandRateElementInterface
   | DemandPerDayRateElementInterface
   | DemandTiersInMonthsRateElementInterface
   | DemandTimeOfUseRateElementInterface
@@ -158,6 +159,11 @@ export interface DemandPerDayRateElementInterface extends BaseRateElementInterfa
   rateComponents: Array<BaseRateComponentInterface & DemandPerDayArgs>;
 }
 
+export interface DemandRateElementInterface extends BaseRateElementInterface {
+  rateElementType: RateElementTypeEnum.Demand;
+  rateComponents: Array<BaseRateComponentInterface & DemandArgs>;
+}
+
 export interface RateComponentArgs {
   charge: number | Array<number>;
   name: string;
@@ -242,8 +248,19 @@ export interface RateElementFilterArgs {
   billingCategories?: Array<BillingCategory>;
 }
 
+export type DemandPeriod = 'monthly' | 'daily' | 'annual';
+export type AveragingDemandPeriod = 'monthly' | undefined; // | 'annual'; // can't average daily since its our most granular period; no need to implement annual averaging yet
+
+export interface DemandArgs extends LoadProfileFilterArgs {
+  demandPeriod: DemandPeriod;
+  averagingPeriod?: AveragingDemandPeriod;
+  averagingQty?: number;
+  min?: number | 'Infinity';
+  max?: number | 'Infinity';
+}
+
 /**
  * Export type definitions of classes so they can be referenced by clients of this package
  */
-export type {default as RateElement} from '../RateElement';
-export type {default as RateComponent} from '../RateComponent';
+export type { default as RateElement } from '../RateElement';
+export type { default as RateComponent } from '../RateComponent';

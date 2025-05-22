@@ -3,6 +3,9 @@ import BillingDeterminants from './_BillingDeterminants';
 import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 import type { DemandTimeOfUseArgs, LoadProfileFilterArgs } from '../types';
 
+/**
+ * @deprecated Use the unified `Demand` class instead with load profile filters for time-of-use logic.
+ */
 class DemandTimeOfUse extends BillingDeterminants {
   private _filters: LoadProfileFilterArgs;
   private _loadProfile: LoadProfile;
@@ -16,6 +19,9 @@ class DemandTimeOfUse extends BillingDeterminants {
 
     this._filters = filters;
     this._loadProfile = loadProfile;
+    throw new Error(
+      'DemandTimeOfUse has been deprecated. Please use RateElementTypeEnum.Demand with load profile filters for time-of-use logic.',
+    );
   }
 
   filteredLoadProfile(): LoadProfile {
