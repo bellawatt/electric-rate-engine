@@ -1,4 +1,4 @@
-import times from 'lodash/times';
+import times from 'lodash.times';
 import { BillingDeterminantsUnits, RateElementClassification, RateElementTypeEnum } from '../constants';
 import LoadProfile from '../LoadProfile';
 import { BlockedTiersArgs, LoadProfileFilterArgs } from '../types';

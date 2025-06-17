@@ -1,6 +1,6 @@
-import groupBy from 'lodash/groupBy';
-import sumBy from 'lodash/sumBy';
-import times from 'lodash/times';
+import groupBy from 'lodash.groupby';
+import sumBy from 'lodash.sumby';
+import times from 'lodash.times';
 import LoadProfile from '../LoadProfile';
 import BillingDeterminants from './_BillingDeterminants';
 import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';

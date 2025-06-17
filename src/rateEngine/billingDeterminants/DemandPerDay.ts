@@ -1,8 +1,8 @@
 import LoadProfile from '../LoadProfile';
 import BillingDeterminants from './_BillingDeterminants';
-import times from 'lodash/times';
-import groupBy from 'lodash/groupBy';
-import sum from 'lodash/sum';
+import times from 'lodash.times';
+import groupBy from 'lodash.groupby';
+import sum from 'lodash.sum';
 import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 import type { DemandPerDayArgs, LoadProfileFilterArgs } from '../types';
 

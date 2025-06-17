@@ -1,6 +1,6 @@
-import times from 'lodash/times';
-import mean from 'lodash/mean';
-import sum from 'lodash/sum';
+import times from 'lodash.times';
+import mean from 'lodash.mean';
+import sum from 'lodash.sum';
 import BillingDeterminants from './billingDeterminants/_BillingDeterminants';
 import { multiplyDecimals } from './utils/decimals';
 import type { RateComponentArgs } from './types';

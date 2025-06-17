@@ -1,5 +1,5 @@
 import Validator from './_Validator';
-import times from 'lodash/times';
+import times from 'lodash.times';
 import expandedDates from '../utils/expandedDates';
 import LoadProfileFilter from '../LoadProfileFilter';
 import LoadProfile from '../LoadProfile';

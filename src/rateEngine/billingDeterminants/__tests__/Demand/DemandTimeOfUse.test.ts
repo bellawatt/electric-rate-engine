@@ -1,5 +1,5 @@
 import LoadProfile from '../../../LoadProfile';
-import times from 'lodash/times';
+import times from 'lodash.times';
 import data from './DemandTimeOfUseData';
 import type { LoadProfileFilterArgs } from '../../../types';
 import Demand from '../../Demand';

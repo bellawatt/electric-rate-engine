@@ -1,4 +1,4 @@
-import lodashMean from 'lodash/mean';
+import mean from 'lodash.mean';
 import { BillingDeterminantsUnits, RateElementClassification } from '../constants';
 
 abstract class BillingDeterminants {
@@ -8,7 +8,7 @@ abstract class BillingDeterminants {
   abstract calculate(): Array<number>;
 
   mean(): number {
-    return lodashMean(this.calculate());
+    return mean(this.calculate());
   }
 
   all(): Array<number> {

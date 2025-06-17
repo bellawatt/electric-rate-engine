@@ -1,5 +1,5 @@
 import LoadProfile from '../../LoadProfile';
-import times from 'lodash/times';
+import times from 'lodash.times';
 import BlockedTiersInMonths from '../BlockedTiersInMonths';
 
 // For reference: the number of hours in each month:

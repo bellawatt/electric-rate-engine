@@ -1,6 +1,6 @@
 import RateComponent from './RateComponent';
 import RateCalculator from './RateCalculator';
-import sum from 'lodash/sum';
+import sum from 'lodash.sum';
 import ValidatorFactory from './ValidatorFactory';
 import LoadProfile from './LoadProfile';
 import RateComponentsFactory from './RateComponentsFactory';

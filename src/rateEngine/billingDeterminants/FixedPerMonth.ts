@@ -1,5 +1,5 @@
 import BillingDeterminants from './_BillingDeterminants';
-import times from 'lodash/times';
+import times from 'lodash.times';
 import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 
 const MONTHS_PER_YEAR = 12;

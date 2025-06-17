@@ -1,5 +1,5 @@
-import maxBy from 'lodash/maxBy';
-import times from 'lodash/times';
+import maxBy from 'lodash.maxby';
+import times from 'lodash.times';
 import LoadProfileFilter from './LoadProfileFilter';
 import LoadProfileScaler from './LoadProfileScaler';
 import type {

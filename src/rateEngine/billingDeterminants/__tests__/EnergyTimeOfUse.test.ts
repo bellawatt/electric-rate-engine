@@ -1,5 +1,5 @@
 import LoadProfile from '../../LoadProfile';
-import times from 'lodash/times';
+import times from 'lodash.times';
 import EnergyTimeOfUse from '../EnergyTimeOfUse';
 import data from './EnergyTimeOfUseData';
 import type { EnergyTimeOfUseArgs } from '../../types';

@@ -1,6 +1,6 @@
 import BillingDeterminants from './_BillingDeterminants';
 import LoadProfile from '../LoadProfile';
-import times from 'lodash/times';
+import times from 'lodash.times';
 import { RateElementClassification, BillingDeterminantsUnits, RateElementTypeEnum } from '../constants';
 
 /**

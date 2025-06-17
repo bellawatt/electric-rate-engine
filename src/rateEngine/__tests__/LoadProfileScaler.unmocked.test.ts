@@ -1,5 +1,5 @@
 import LoadProfileScaler from '../LoadProfileScaler';
-import { times } from 'lodash';
+import times from 'lodash.times';
 import LoadProfile from '../LoadProfile';
 import e1 from '../__mocks__/rates/e-1';
 import RateCalculator from '../RateCalculator';

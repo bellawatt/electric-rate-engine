@@ -1,5 +1,5 @@
 import LoadProfile from '../../../LoadProfile';
-import times from 'lodash/times';
+import times from 'lodash.times';
 import Demand from '../../Demand';
 
 const getLoadProfileOfOnes = () => times(8760, () => 1);

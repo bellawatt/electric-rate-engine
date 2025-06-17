@@ -1,4 +1,4 @@
-import sum from 'lodash/sum';
+import sum from 'lodash.sum';
 import RateElement from './RateElement';
 import type { RateCalculatorInterface, RateElementFilterArgs } from './types';
 

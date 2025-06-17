@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import times from 'lodash/times';
+import times from 'lodash.times';
 import type { ExpandedDate } from '../types';
 import { isLeapYear } from './datetimes';
 
