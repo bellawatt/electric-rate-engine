@@ -1,4 +1,7 @@
-import { groupBy, mean, sum, times } from 'lodash';
+import groupBy from 'lodash/groupBy';
+import mean from 'lodash/mean';
+import sum from 'lodash/sum';
+import times from 'lodash/times';
 import LoadProfile from './LoadProfile';
 import { AveragingDemandPeriod, DemandArgs, DemandPeriod } from './types';
 import { convertInfinity } from './utils/convertInfinities';
