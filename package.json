@@ -1,6 +1,6 @@
 {
   "name": "@bellawatt/electric-rate-engine",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Electric Rate Engine",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
